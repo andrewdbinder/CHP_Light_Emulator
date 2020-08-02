@@ -17,9 +17,9 @@ class Vehicle_Lights {
   VehicleLightState
     // Daytime Running Lights
     DRL_Const,  // Always on; IE 2016 Explorer
-    DRL_Gear,   // On in drive OR at least park lights; IE Tahoe
+    DRL_Gear,   // On in drive/dim with park lights; IE Tahoe
 
-    // Same as Gear, turns off for indicators
+    // Same as Gear, turns off for indicators during daytime
     DRL_Turn_D,
     DRL_Turn_P,
 
@@ -27,7 +27,7 @@ class Vehicle_Lights {
     Turn_LED_F_D,
     Turn_LED_F_P,
 
-    // Front turn signal, Incandescent ON/DIM/OFF
+    // Front turn signal, Incandescent ON/DIM/OFF; ie crown vic
     Turn_INC_F_D,
     Turn_INC_F_P,
 
