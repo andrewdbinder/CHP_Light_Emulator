@@ -15,28 +15,28 @@ class CHP_Lights {
  public:
   // Lightbar
   EmergencyLightState
-      LB_FR_INNER_RED,
-      LB_FR_OUTER_RED,
-      LB_FR_CORNER_RED,
+      LB_FR_Inner_Red,
+      LB_FR_Outer_Red,
+      LB_FR_Corner_Red,
 
-      LB_FR_INNER_BLUE,
-      LB_FR_OUTER_BLUE,
-      LB_FR_CORNER_BLUE,
+      LB_FR_Inner_Blue,
+      LB_FR_Outer_Blue,
+      LB_FR_Corner_Blue,
 
-      LB_SIDE_BLUE,
-      LB_SIDE_RED,
+      LB_Side_Blue,
+      LB_Side_Red,
 
-      LB_TAKEDOWN_CENTER,
-      LB_TAKEDOWN_OUTER,
+      LB_Takedown_Center,
+      LB_Takedown_Outer,
 
-      LB_DR_ALLEY,
-      LB_PS_ALLEY,
+      LB_DR_Alley,
+      LB_PS_Alley,
 
-      LB_RE_CORNER_BLUE,
-      LB_RE_BLUE,
+      LB_RE_Corner_Blue,
+      LB_RE_Blue,
 
-      LB_RE_CORNER_RED,
-      LB_RE_RED,
+      LB_RE_Corner_Red,
+      LB_RE_Red,
 
       LB_TA_1,
       LB_TA_2,
@@ -46,19 +46,23 @@ class CHP_Lights {
 
   // Single Lights
   EmergencyLightState
-      PB_DR_INNER,
-      PB_DR_OUTER,
+      PB_DR_Inner,
+      PB_DR_Outer,
 
-      PB_PS_INNER,
-      PB_PS_OUTER,
+      PB_PS_Inner,
+      PB_PS_Outer,
 
-      DASH_RED,
-      DASH_BLUE;
+      Dash_Red,
+      Dash_Blue;
+
+  // Wig Wag
+  bool
+      Wig_Wag;
 
   // Spotlights
   bool
-      SPOT_DR,
-      SPOT_PS;
+      Spot_DR,
+      Spot_PS;
 };
 
 

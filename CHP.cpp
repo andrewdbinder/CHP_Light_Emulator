@@ -5,10 +5,10 @@
 #include "CHP.h"
 CHP::CHP(bool *main_ww_tim, bool *hdl_ww_tim, bool *ind_ww_tim) {
   // Emergency Lights WW
-    MAIN_TIM = main_ww_tim;
+  MAIN_TIM = main_ww_tim;
 
   // Headlight Flasher
-    HDL_TIM = hdl_ww_tim;
+  HDL_TIM = hdl_ww_tim;
 
   // Indicator Flasher
   IND_TIM = ind_ww_tim;
@@ -20,11 +20,11 @@ void CHP::updateEmergencyOutput() {
       break;
     case Code1::REAR_AMBER:
       if (MAIN_TIM[0]) {
-        EmergencyLights.LB_RE_BLUE = EmergencyLightState::ON;
-        EmergencyLights.LB_RE_CORNER_BLUE = EmergencyLightState::ON;
+        EmergencyLights.LB_RE_Blue = EmergencyLightState::ON;
+        EmergencyLights.LB_RE_Corner_Blue = EmergencyLightState::ON;
       } else {
-        EmergencyLights.LB_RE_BLUE = EmergencyLightState::OFF;
-        EmergencyLights.LB_RE_CORNER_BLUE = EmergencyLightState::OFF;
+        EmergencyLights.LB_RE_Blue = EmergencyLightState::OFF;
+        EmergencyLights.LB_RE_Corner_Blue = EmergencyLightState::OFF;
       }
 
       if (MAIN_TIM[1]) {
@@ -40,17 +40,17 @@ void CHP::updateEmergencyOutput() {
 
     case Code1::FORWARD_CUTOFF:
       if (MAIN_TIM[0]) {
-        EmergencyLights.LB_RE_BLUE = EmergencyLightState::ON;
-        EmergencyLights.LB_RE_CORNER_BLUE = EmergencyLightState::ON;
+        EmergencyLights.LB_RE_Blue = EmergencyLightState::ON;
+        EmergencyLights.LB_RE_Corner_Blue = EmergencyLightState::ON;
 
-        EmergencyLights.LB_RE_RED = EmergencyLightState::ON;
-        EmergencyLights.LB_RE_CORNER_RED = EmergencyLightState::ON;
+        EmergencyLights.LB_RE_Red = EmergencyLightState::ON;
+        EmergencyLights.LB_RE_Corner_Red = EmergencyLightState::ON;
       } else {
-        EmergencyLights.LB_RE_BLUE = EmergencyLightState::OFF;
-        EmergencyLights.LB_RE_CORNER_BLUE = EmergencyLightState::OFF;
+        EmergencyLights.LB_RE_Blue = EmergencyLightState::OFF;
+        EmergencyLights.LB_RE_Corner_Blue = EmergencyLightState::OFF;
 
-        EmergencyLights.LB_RE_RED = EmergencyLightState::OFF;
-        EmergencyLights.LB_RE_CORNER_RED = EmergencyLightState::OFF;
+        EmergencyLights.LB_RE_Red = EmergencyLightState::OFF;
+        EmergencyLights.LB_RE_Corner_Red = EmergencyLightState::OFF;
       }
 
       if (MAIN_TIM[1]) {
@@ -86,18 +86,39 @@ void CHP::updateEmergencyOutput() {
   switch(StateMachine.State.Code2_S) {
     case Code2::OFF:
       break;
-    case Code2::FORWARD_RED:
-      EmergencyLights.LB_FR_INNER_RED = EmergencyLightState::STEADY_BURN;
-      EmergencyLights.LB_FR_OUTER_RED = EmergencyLightState::STEADY_BURN;
-      EmergencyLights.LB_FR_CORNER_RED = EmergencyLightState::STEADY_BURN;
+    case Code2::FORWARD_RED: // F-RED
+      EmergencyLights.LB_FR_Inner_Red = EmergencyLightState::STEADY_BURN;
+      EmergencyLights.LB_FR_Outer_Red = EmergencyLightState::STEADY_BURN;
+      EmergencyLights.LB_FR_Corner_Red = EmergencyLightState::STEADY_BURN;
 
       EmergencyLights.DASH_RED = EmergencyLightState::STEADY_BURN;
 
-      EmergencyLights.PB_DR_OUTER = EmergencyLightState::STEADY_BURN;
-      EmergencyLights.PB_PS_OUTER = EmergencyLightState::STEADY_BURN;
+      EmergencyLights.PB_DR_Outer = EmergencyLightState::STEADY_BURN;
+      EmergencyLights.PB_PS_Outer = EmergencyLightState::STEADY_BURN;
+
+      if (VehicleStateMachine.State.Gear_S != Gear::PARK) {
+
+        if (MAIN_TIM[0]) {
+          EmergencyLights.PB_DR_Inner = EmergencyLightState::ON;
+        } else {
+          EmergencyLights.PB_DR_Inner = EmergencyLightState::OFF;
+        }
+
+        if (MAIN_TIM[1]) {
+          EmergencyLights.PB_PS_Inner = EmergencyLightState::ON;
+        } else {
+          EmergencyLights.PB_PS_Inner = EmergencyLightState::OFF;
+        }
+
+      } else {
+        EmergencyLights.PB_DR_Inner = EmergencyLightState::STEADY_BURN;
+        EmergencyLights.PB_PS_Inner = EmergencyLightState::STEADY_BURN;
+      };
 
       break;
-    case Code2::FORWARD_RED_WW:break;
+    case Code2::FORWARD_RED_WW: // F-RED + WW
+
+      break;
   }
 }
 
