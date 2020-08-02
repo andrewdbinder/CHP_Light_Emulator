@@ -3,9 +3,6 @@
 //
 
 #include "CHP_State_Machine.h"
-CHP_Emergency_States CHP_State_Machine::thisObject() {
-  return State;
-}
 
 void CHP_State_Machine::StateChange(EmergencyStateEvent event) {
   switch(event) {
