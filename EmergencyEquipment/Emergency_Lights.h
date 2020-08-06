@@ -5,7 +5,7 @@
 #ifndef CHP_V4_EMERGENCY_LIGHTS_H
 #define CHP_V4_EMERGENCY_LIGHTS_H
 
-enum class EmergencyLightState {
+enum class EmergencyLightState : char {
   OFF,
   ON,
   STEADY_BURN
@@ -63,6 +63,8 @@ class CHP_Lights {
   bool
       Spot_DR,
       Spot_PS;
+
+  CHP_Lights();
 };
 
 

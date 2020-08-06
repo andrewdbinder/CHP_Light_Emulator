@@ -61,6 +61,8 @@ class Vehicle_Lights {
 
     // Rear Park Lights
     Park_R;
+
+  Vehicle_Lights();
 };
 
 #endif //CHP_V4_VEHICLE_LIGHTS_H

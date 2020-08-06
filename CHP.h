@@ -5,10 +5,10 @@
 #ifndef CHP_V4_CHP_H
 #define CHP_V4_CHP_H
 
-#include "CHP_State_Machine.h"
-#include "Emergency_Lights.h"
-#include "Vehicle_State_Machine.h"
-#include "Vehicle_Lights.h"
+#include "EmergencyEquipment/CHP_State_Machine.h"
+#include "EmergencyEquipment/Emergency_Lights.h"
+#include "Vehicle/Vehicle_State_Machine.h"
+#include "Vehicle/Vehicle_Lights.h"
 
 class CHP {
  public:
@@ -17,8 +17,12 @@ class CHP {
 
   bool
     *MAIN_TIM,
+    *YELP_TIM,
     *HDL_TIM,
     *IND_TIM;
+
+  short
+    *YELP_CNT;
 
   CHP_Lights EmergencyLights;
   CHP_State_Machine StateMachine;

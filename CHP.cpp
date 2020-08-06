@@ -12,6 +12,9 @@ CHP::CHP(bool *main_ww_tim, bool *hdl_ww_tim, bool *ind_ww_tim) {
 
   // Indicator Flasher
   IND_TIM = ind_ww_tim;
+
+  EmergencyLights = CHP_Lights();
+  VehicleLights = Vehicle_Lights();
 }
 
 void CHP::updateEmergencyOutput() {
@@ -91,7 +94,7 @@ void CHP::updateEmergencyOutput() {
       EmergencyLights.LB_FR_Outer_Red = EmergencyLightState::STEADY_BURN;
       EmergencyLights.LB_FR_Corner_Red = EmergencyLightState::STEADY_BURN;
 
-      EmergencyLights.DASH_RED = EmergencyLightState::STEADY_BURN;
+      EmergencyLights.Dash_Red = EmergencyLightState::STEADY_BURN;
 
       EmergencyLights.PB_DR_Outer = EmergencyLightState::STEADY_BURN;
       EmergencyLights.PB_PS_Outer = EmergencyLightState::STEADY_BURN;
@@ -117,8 +120,122 @@ void CHP::updateEmergencyOutput() {
 
       break;
     case Code2::FORWARD_RED_WW: // F-RED + WW
+      EmergencyLights.Wig_Wag = true;
 
+      EmergencyLights.LB_FR_Inner_Red = EmergencyLightState::STEADY_BURN;
+      EmergencyLights.LB_FR_Outer_Red = EmergencyLightState::STEADY_BURN;
+
+      EmergencyLights.Dash_Red = EmergencyLightState::STEADY_BURN;
+
+
+      if (VehicleStateMachine.State.Gear_S != Gear::PARK) {
+
+        if (MAIN_TIM[0]) {
+          EmergencyLights.LB_FR_Corner_Red = EmergencyLightState::ON;
+          EmergencyLights.PB_DR_Inner = EmergencyLightState::ON;
+          EmergencyLights.PB_DR_Outer = EmergencyLightState::ON;
+        } else {
+          EmergencyLights.LB_FR_Corner_Red = EmergencyLightState::OFF;
+          EmergencyLights.PB_DR_Inner = EmergencyLightState::OFF;
+          EmergencyLights.PB_DR_Outer = EmergencyLightState::OFF;
+        }
+
+        if (MAIN_TIM[1]) {
+          EmergencyLights.LB_FR_Corner_Blue = EmergencyLightState::ON;
+          EmergencyLights.PB_PS_Inner = EmergencyLightState::ON;
+          EmergencyLights.PB_PS_Outer = EmergencyLightState::ON;
+        } else {
+          EmergencyLights.LB_FR_Corner_Blue = EmergencyLightState::OFF;
+          EmergencyLights.PB_PS_Inner = EmergencyLightState::OFF;
+          EmergencyLights.PB_PS_Outer = EmergencyLightState::OFF;
+        }
+
+      } else {
+        EmergencyLights.Wig_Wag = false;
+
+        EmergencyLights.LB_FR_Corner_Blue = EmergencyLightState::STEADY_BURN;
+        EmergencyLights.LB_FR_Corner_Red = EmergencyLightState::STEADY_BURN;
+
+        EmergencyLights.PB_DR_Inner = EmergencyLightState::STEADY_BURN;
+        EmergencyLights.PB_PS_Inner = EmergencyLightState::STEADY_BURN;
+        EmergencyLights.PB_DR_Outer = EmergencyLightState::STEADY_BURN;
+        EmergencyLights.PB_PS_Outer = EmergencyLightState::STEADY_BURN;
+      };
       break;
+  }
+
+  switch(StateMachine.State.Code3_S) {
+
+    case Code3::OFF:
+      break;
+
+    case Code3::CODE_3:
+      EmergencyLights.Wig_Wag = true;
+
+      EmergencyLights.LB_FR_Outer_Red = EmergencyLightState::STEADY_BURN;
+      EmergencyLights.Dash_Red = EmergencyLightState::STEADY_BURN;
+
+      if (VehicleStateMachine.State.Gear_S != Gear::PARK) {
+        if (StateMachine.State.ConSiren_S != ContinuousSiren::YELP) {
+          if (MAIN_TIM[0]) {
+            EmergencyLights.LB_FR_Inner_Red = EmergencyLightState::ON;
+            EmergencyLights.LB_FR_Corner_Red = EmergencyLightState::ON;
+
+            EmergencyLights.PB_DR_Inner = EmergencyLightState::ON;
+            EmergencyLights.PB_DR_Outer = EmergencyLightState::ON;
+          } else {
+            EmergencyLights.LB_FR_Inner_Red = EmergencyLightState::OFF;
+            EmergencyLights.LB_FR_Corner_Red = EmergencyLightState::OFF;
+
+            EmergencyLights.PB_DR_Inner = EmergencyLightState::OFF;
+            EmergencyLights.PB_DR_Outer = EmergencyLightState::OFF;
+          }
+
+          if (MAIN_TIM[1]) {
+            EmergencyLights.LB_FR_Inner_Blue = EmergencyLightState::ON;
+            EmergencyLights.LB_FR_Outer_Blue = EmergencyLightState::ON;
+            EmergencyLights.LB_FR_Corner_Blue = EmergencyLightState::ON;
+
+            EmergencyLights.Dash_Blue = EmergencyLightState::ON;
+
+            EmergencyLights.PB_PS_Inner = EmergencyLightState::ON;
+            EmergencyLights.PB_PS_Outer = EmergencyLightState::ON;
+          } else {
+            EmergencyLights.LB_FR_Inner_Blue = EmergencyLightState::OFF;
+            EmergencyLights.LB_FR_Outer_Blue = EmergencyLightState::OFF;
+            EmergencyLights.LB_FR_Corner_Blue = EmergencyLightState::OFF;
+
+            EmergencyLights.Dash_Blue = EmergencyLightState::OFF;
+
+            EmergencyLights.PB_PS_Inner = EmergencyLightState::OFF;
+            EmergencyLights.PB_PS_Outer = EmergencyLightState::OFF;
+          }
+        } else {
+          // TODO: "Wall of light" Yelp pattern
+        }
+
+      } else {
+        EmergencyLights.Wig_Wag = false;
+
+        EmergencyLights.LB_FR_Inner_Blue = EmergencyLightState::STEADY_BURN;
+        EmergencyLights.LB_FR_Corner_Blue = EmergencyLightState::STEADY_BURN;
+        EmergencyLights.LB_FR_Corner_Blue = EmergencyLightState::STEADY_BURN;
+
+        EmergencyLights.LB_FR_Inner_Red = EmergencyLightState::STEADY_BURN;
+        EmergencyLights.LB_FR_Corner_Red = EmergencyLightState::STEADY_BURN;
+        EmergencyLights.LB_FR_Corner_Red = EmergencyLightState::STEADY_BURN;
+
+        EmergencyLights.Dash_Blue = EmergencyLightState::STEADY_BURN;
+
+        EmergencyLights.PB_DR_Inner = EmergencyLightState::STEADY_BURN;
+        EmergencyLights.PB_DR_Outer = EmergencyLightState::STEADY_BURN;
+        EmergencyLights.PB_PS_Inner = EmergencyLightState::STEADY_BURN;
+        EmergencyLights.PB_PS_Outer = EmergencyLightState::STEADY_BURN;
+      }
+      break;
+    case Code3::CODE_3_WW:break;
+    case Code3::CODE_3_WW_AM:break;
+    case Code3::CODE_3_PK:break;
   }
 }
 

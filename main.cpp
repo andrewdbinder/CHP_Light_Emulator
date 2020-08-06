@@ -1,5 +1,5 @@
 #include <iostream>
-#include "CHP_State_Machine.h"
+#include "EmergencyEquipment/CHP_State_Machine.h"
 #include "CHP.h"
 
 using namespace std;
@@ -26,8 +26,10 @@ int main() {
   e_ww[1] = true;
   cout << CHP.MAIN_TIM[0] << CHP.MAIN_TIM[1] << endl;
 
+  CHP.EmergencyLights = CHP_Lights();
 
 
+  cout << sizeof(CHP.EmergencyLights.PB_DR_Inner);
   return 0;
 }
 

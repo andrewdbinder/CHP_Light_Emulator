@@ -5,36 +5,36 @@
 #ifndef CHP_V4_VEHICLE_STATE_MACHINE_H
 #define CHP_V4_VEHICLE_STATE_MACHINE_H
 
-enum class Gear {
+enum class Gear : char {
   PARK,
   REVERSE,
   DRIVE
 };
 
-enum class Headlights {
+enum class Headlights : char {
   OFF,
   PARK,
   ON
 };
 
-enum class Brights {
+enum class Brights : char {
   OFF,
   ON
 };
 
-enum class Brakes {
+enum class Brakes : char {
   OFF,
   ON
 };
 
-enum class Indicators {
+enum class Indicators : char {
   OFF,
   TURN_LEFT,
   TURN_RIGHT,
   HAZARD
 };
 
-enum class Horn {
+enum class Horn : char {
   OFF,
   ON
 };
