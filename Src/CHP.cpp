@@ -4,7 +4,7 @@
 
 #include "CHP.h"
 CHP::CHP(bool *main_ww_tim, bool *hdl_ww_tim, bool *ind_ww_tim) {
-  // Emergency Lights WW
+  // Emergency Lights WW1
   MAIN_TIM = main_ww_tim;
 
   // Headlight Flasher
@@ -119,7 +119,7 @@ void CHP::updateEmergencyOutput() {
       };
 
       break;
-    case Code2::FORWARD_RED_WW: // F-RED + WW
+    case Code2::FORWARD_RED_WW: // F-RED + WW1
       EmergencyLights.Wig_Wag = true;
 
       EmergencyLights.LB_FR_Inner_Red = EmergencyLightState::STEADY_BURN;
@@ -144,10 +144,14 @@ void CHP::updateEmergencyOutput() {
           EmergencyLights.LB_FR_Corner_Blue = EmergencyLightState::ON;
           EmergencyLights.PB_PS_Inner = EmergencyLightState::ON;
           EmergencyLights.PB_PS_Outer = EmergencyLightState::ON;
+
+          EmergencyLights.Dash_Blue = EmergencyLightState::ON;
         } else {
           EmergencyLights.LB_FR_Corner_Blue = EmergencyLightState::OFF;
           EmergencyLights.PB_PS_Inner = EmergencyLightState::OFF;
           EmergencyLights.PB_PS_Outer = EmergencyLightState::OFF;
+
+          EmergencyLights.Dash_Blue = EmergencyLightState::OFF;
         }
 
       } else {
@@ -316,4 +320,66 @@ void CHP::updateVehicleOutput() {
     }
   }
 
+}
+char CHP::StateChange(char input) {
+  // Emergency Lights
+  switch (input) {
+
+    // Code 1
+    case 'z':
+      return EmergencyStateMachine.StateChange(Code1::OFF);
+    case '1':
+      return EmergencyStateMachine.StateChange(Code1::REAR_AMBER);
+    case'q':
+      return EmergencyStateMachine.StateChange(Code1::FORWARD_CUTOFF);
+    case 'a':
+      return EmergencyStateMachine.StateChange(Code1::AMBER_ONLY);
+
+    // Code 2
+    case 's':
+      return EmergencyStateMachine.StateChange(Code2::OFF);
+    case '2':
+      return EmergencyStateMachine.StateChange(Code2::FORWARD_RED);
+    case 'w':
+      return EmergencyStateMachine.StateChange(Code2::FORWARD_RED_WW);
+
+    // Code 3
+    case 'x':
+      return EmergencyStateMachine.StateChange(Code3::OFF);
+    case '3':
+      return EmergencyStateMachine.StateChange(Code3::CODE_3);
+    case 'e':
+      return EmergencyStateMachine.StateChange(Code3::CODE_3_WW);
+    case 'd':
+      return EmergencyStateMachine.StateChange(Code3::CODE_3_WW_AM);
+    case 'c':
+      return EmergencyStateMachine.StateChange(Code3::CODE_3_PK);
+
+    // Traffic Advisor
+    case 'h':
+      return EmergencyStateMachine.StateChange(TrafficAdvisor::OFF);
+    case 'j':
+      return EmergencyStateMachine.StateChange(TrafficAdvisor::LEFT);
+    case 'l':
+      return EmergencyStateMachine.StateChange(TrafficAdvisor::RIGHT);
+    case 'k':
+      return EmergencyStateMachine.StateChange(TrafficAdvisor::SPLIT);
+
+    // Siren
+    case 'b':
+      return EmergencyStateMachine.StateChange(ContinuousSiren::OFF);
+    case 'n':
+      return EmergencyStateMachine.StateChange(ContinuousSiren::WAIL);
+    case 'm':
+      return EmergencyStateMachine.StateChange(ContinuousSiren::YELP);
+
+    // Int. Siren
+    case ',':
+      return EmergencyStateMachine.StateChange(IntermittentSiren::OFF);
+    case '.':
+      return EmergencyStateMachine.StateChange(IntermittentSiren::AIR_HORN);
+    case '/':
+      return EmergencyStateMachine.StateChange(IntermittentSiren::MANUAL);
+  }
+  return 0;
 }

@@ -30,6 +30,7 @@ class CHP {
   Vehicle_Lights VehicleLights;
   Vehicle_State_Machine VehicleStateMachine;
 
+  char StateChange(char);
   void updateEmergencyOutput();
   void updateVehicleOutput();
 
