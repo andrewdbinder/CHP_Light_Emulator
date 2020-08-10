@@ -22,13 +22,13 @@ class CHP_State_Machine {
  public:
   CHP_Emergency_States State;
 
-  void StateChange(EmergencyStateEvent);
-  void StateChange(Code1 event);
-  void StateChange(Code2 event);
-  void StateChange(Code3 event);
-  void StateChange(TrafficAdvisor event);
-  void StateChange(ContinuousSiren event);
-  void StateChange(IntermittentSiren event);
+  char StateChange(EmergencyStateEvent);
+  char StateChange(Code1 event);
+  char StateChange(Code2 event);
+  char StateChange(Code3 event);
+  char StateChange(TrafficAdvisor event);
+  char StateChange(ContinuousSiren event);
+  char StateChange(IntermittentSiren event);
 
 };
 

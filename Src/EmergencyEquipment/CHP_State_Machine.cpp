@@ -4,7 +4,7 @@
 
 #include "CHP_State_Machine.h"
 
-void CHP_State_Machine::StateChange(EmergencyStateEvent event) {
+char CHP_State_Machine::StateChange(EmergencyStateEvent event) {
   switch(event) {
     case EmergencyStateEvent::ALL_OFF:
       State.Code1_S = Code1::OFF;
@@ -12,155 +12,151 @@ void CHP_State_Machine::StateChange(EmergencyStateEvent event) {
       State.Code3_S = Code3::OFF;
       State.TrafficAdvisor_S = TrafficAdvisor::OFF;
       State.ConSiren_S = ContinuousSiren::OFF;
-      break;
-    case EmergencyStateEvent::AIR_HORN_ON:break;
-    case EmergencyStateEvent::AIR_HORN_OFF:break;
-    case EmergencyStateEvent::MANUAL_ON:break;
-    case EmergencyStateEvent::MANUAL_OFF:break;
+      return '0';
   }
 }
 
-void CHP_State_Machine::StateChange(Code1 event) {
+char CHP_State_Machine::StateChange(Code1 event) {
   switch(event) {
     case Code1::OFF:
       State.Code1_S = Code1::OFF;
-      break;
+      return 'z';
 
     case Code1::REAR_AMBER:
       State.Code1_S = Code1::REAR_AMBER;
       State.Code2_S = Code2::OFF;
       State.Code3_S = Code3::OFF;
       State.TrafficAdvisor_S = TrafficAdvisor::OFF;
-      break;
+      return '1';
 
     case Code1::FORWARD_CUTOFF:
       State.Code1_S = Code1::FORWARD_CUTOFF;
       State.Code2_S = Code2::OFF;
       State.Code3_S = Code3::OFF;
       State.TrafficAdvisor_S = TrafficAdvisor::OFF;
-      break;
+      return 'q';
 
     case Code1::AMBER_ONLY:
       State.Code1_S = Code1::AMBER_ONLY;
       State.Code2_S = Code2::OFF;
       State.Code3_S = Code3::OFF;
       State.TrafficAdvisor_S = TrafficAdvisor::OFF;
-      break;
+      return 'a';
   }
 }
 
-void CHP_State_Machine::StateChange(Code2 event) {
+char CHP_State_Machine::StateChange(Code2 event) {
   switch(event) {
     case Code2::OFF:
       State.Code2_S = Code2::OFF;
-      break;
+      return 's';
 
     case Code2::FORWARD_RED:
       State.Code1_S = Code1::OFF;
       State.Code2_S = Code2::FORWARD_RED;
       State.Code3_S = Code3::OFF;
-//      State.TrafficAdvisor_S = TrafficAdvisor::OFF;
-      break;
+      return '2';
 
-    case Code2::FORWARD_RED_WW:
+      case Code2::FORWARD_RED_WW:
       State.Code1_S = Code1::OFF;
       State.Code2_S = Code2::FORWARD_RED_WW;
       State.Code3_S = Code3::OFF;
-//      State.TrafficAdvisor_S = TrafficAdvisor::OFF;
-      break;
+      return 'w';
   }
 }
-void CHP_State_Machine::StateChange(Code3 event) {
+
+char CHP_State_Machine::StateChange(Code3 event) {
   switch(event) {
     case Code3::OFF:
       State.Code3_S = Code3::OFF;
-      break;
+      return 'x';
 
     case Code3::CODE_3:
       State.Code1_S = Code1::OFF;
       State.Code2_S = Code2::OFF;
       State.Code3_S = Code3::CODE_3;
-      break;
+      return '3';
 
     case Code3::CODE_3_WW:
       State.Code1_S = Code1::OFF;
       State.Code2_S = Code2::OFF;
       State.Code3_S = Code3::CODE_3_WW;
-      break;
+      return 'e';
 
       // TODO: Not sure if this mode should force shut off TA
     case Code3::CODE_3_WW_AM:
       State.Code1_S = Code1::OFF;
       State.Code2_S = Code2::OFF;
       State.Code3_S = Code3::CODE_3_WW_AM;
-      break;
+      return 'd';
 
     case Code3::CODE_3_PK:
       State.Code1_S = Code1::OFF;
       State.Code2_S = Code2::OFF;
       State.Code3_S = Code3::CODE_3_PK;
-      break;
+      return 'c';
   }
 }
-void CHP_State_Machine::StateChange(TrafficAdvisor event) {
+
+char CHP_State_Machine::StateChange(TrafficAdvisor event) {
   switch(event) {
     case TrafficAdvisor::OFF:
       State.TrafficAdvisor_S = TrafficAdvisor::OFF;
-      break;
+      return 'h';
 
     case TrafficAdvisor::LEFT:
       State.Code1_S = Code1::OFF;
       State.TrafficAdvisor_S = TrafficAdvisor::LEFT;
-      break;
+      return 'j';
 
     case TrafficAdvisor::RIGHT:
       State.Code1_S = Code1::OFF;
       State.TrafficAdvisor_S = TrafficAdvisor::RIGHT;
-      break;
+      return 'l';
 
     case TrafficAdvisor::SPLIT:
       State.Code1_S = Code1::OFF;
       State.TrafficAdvisor_S = TrafficAdvisor::SPLIT;
-      break;
+      return 'k';
   }
 }
 
-void CHP_State_Machine::StateChange(ContinuousSiren event) {
+char CHP_State_Machine::StateChange(ContinuousSiren event) {
   switch(event) {
     case ContinuousSiren::OFF:
       State.ConSiren_S = ContinuousSiren::OFF;
-      break;
+      return 'b';
 
     case ContinuousSiren::WAIL:
       if (Active(State.Code3_S) || State.Code2_S == Code2::FORWARD_RED_WW) {
         State.ConSiren_S = ContinuousSiren::WAIL;
       }
-      break;
+      return 'n';
 
     case ContinuousSiren::YELP:
       if (Active(State.Code3_S) || State.Code2_S == Code2::FORWARD_RED_WW) {
         State.ConSiren_S = ContinuousSiren::YELP;
       }
-      break;
+      return 'm';
   }
 }
 
-void CHP_State_Machine::StateChange(IntermittentSiren event) {
+char CHP_State_Machine::StateChange(IntermittentSiren event) {
   switch(event) {
     case IntermittentSiren::OFF:
       State.IntSiren_S = IntermittentSiren::OFF;
-      break;
+      return ',';
 
     case IntermittentSiren::AIR_HORN:
       if (State.Code2_S == Code2::FORWARD_RED) {
         State.IntSiren_S = IntermittentSiren::AIR_HORN;
       }
-      break;
+      return '.';
 
     case IntermittentSiren::MANUAL:
       if (Active(State.Code3_S) || State.Code2_S == Code2::FORWARD_RED_WW) {
         State.IntSiren_S = IntermittentSiren::MANUAL;
       }
-      break;
+      return '/';
   }
 }
