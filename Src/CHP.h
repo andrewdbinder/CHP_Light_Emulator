@@ -25,13 +25,11 @@ class CHP {
     *YELP_CNT;
 
   CHP_Lights EmergencyLights;
-  CHP_State_Machine StateMachine;
+  CHP_State_Machine EmergencyStateMachine;
 
   Vehicle_Lights VehicleLights;
   Vehicle_State_Machine VehicleStateMachine;
 
-
- private:
   void updateEmergencyOutput();
   void updateVehicleOutput();
 

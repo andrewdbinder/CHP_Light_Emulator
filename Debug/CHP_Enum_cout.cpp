@@ -1,8 +1,8 @@
 //
-// Created by Andrew on 7/5/2020.
+// Created by Andrew on 8/9/2020.
 //
-#include <iostream>
-#include "CHP_Enums.h"
+
+#include "CHP_Enum_cout.h"
 
 std::ostream& operator<<(std::ostream &os, const Code1 &c) {
   switch (c) {
@@ -60,28 +60,4 @@ std::ostream& operator<<(std::ostream &os, const IntermittentSiren &c)  {
     case IntermittentSiren::MANUAL: os << "MANUAL"; break;
   }
   return os;
-}
-
-bool Active(Code1 &c) {
-  return c != Code1::OFF;
-}
-
-bool Active(Code2 &c) {
-  return c != Code2::OFF;
-}
-
-bool Active(Code3 &c) {
-  return c != Code3::OFF;
-}
-
-bool Active(TrafficAdvisor &c) {
-  return c != TrafficAdvisor::OFF;
-}
-
-bool Active(ContinuousSiren &c) {
-  return c != ContinuousSiren::OFF;
-}
-
-bool Active(IntermittentSiren &c) {
-  return c != IntermittentSiren::OFF;
 }

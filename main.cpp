@@ -1,9 +1,9 @@
 #include <iostream>
-#include "EmergencyEquipment/CHP_State_Machine.h"
-#include "CHP.h"
+#include "Src/EmergencyEquipment/CHP_State_Machine.h"
+#include "Src/CHP.h"
+#include "Debug/CHP_Enum_cout.h"
 
 using namespace std;
-
 
 void testStateMachine(CHP);
 void printState(CHP_Emergency_States state);
@@ -52,60 +52,60 @@ void testStateMachine(CHP CHP) {
     if (cin) {
       switch (char_input) {
         case '1':
-          switch (CHP.StateMachine.State.Code1_S) {
+          switch (CHP.EmergencyStateMachine.State.Code1_S) {
 
             case Code1::OFF:
-              CHP.StateMachine.StateChange(Code1::REAR_AMBER);
+              CHP.EmergencyStateMachine.StateChange(Code1::REAR_AMBER);
               break;
             case Code1::REAR_AMBER:
-              CHP.StateMachine.StateChange(Code1::FORWARD_CUTOFF);
+              CHP.EmergencyStateMachine.StateChange(Code1::FORWARD_CUTOFF);
               break;
             case Code1::FORWARD_CUTOFF:
-              CHP.StateMachine.StateChange(Code1::AMBER_ONLY);
+              CHP.EmergencyStateMachine.StateChange(Code1::AMBER_ONLY);
               break;
             case Code1::AMBER_ONLY:
-              CHP.StateMachine.StateChange(Code1::OFF);
+              CHP.EmergencyStateMachine.StateChange(Code1::OFF);
               break;
           }
-          printState(CHP.StateMachine.State);
+          printState(CHP.EmergencyStateMachine.State);
           break;
 
         case '2':
-          switch (CHP.StateMachine.State.Code2_S) {
+          switch (CHP.EmergencyStateMachine.State.Code2_S) {
 
             case Code2::OFF:
-              CHP.StateMachine.StateChange(Code2::FORWARD_RED);
+              CHP.EmergencyStateMachine.StateChange(Code2::FORWARD_RED);
               break;
             case Code2::FORWARD_RED:
-              CHP.StateMachine.StateChange(Code2::FORWARD_RED_WW);
+              CHP.EmergencyStateMachine.StateChange(Code2::FORWARD_RED_WW);
               break;
             case Code2::FORWARD_RED_WW:
-              CHP.StateMachine.StateChange(Code2::OFF);
+              CHP.EmergencyStateMachine.StateChange(Code2::OFF);
               break;
           }
-          printState(CHP.StateMachine.State);
+          printState(CHP.EmergencyStateMachine.State);
           break;
 
         case '3':
-          switch (CHP.StateMachine.State.Code3_S) {
+          switch (CHP.EmergencyStateMachine.State.Code3_S) {
 
             case Code3::OFF:
-              CHP.StateMachine.StateChange(Code3::CODE_3);
+              CHP.EmergencyStateMachine.StateChange(Code3::CODE_3);
               break;
             case Code3::CODE_3:
-              CHP.StateMachine.StateChange(Code3::CODE_3_WW);
+              CHP.EmergencyStateMachine.StateChange(Code3::CODE_3_WW);
               break;
             case Code3::CODE_3_WW:
-              CHP.StateMachine.StateChange(Code3::CODE_3_WW_AM);
+              CHP.EmergencyStateMachine.StateChange(Code3::CODE_3_WW_AM);
               break;
             case Code3::CODE_3_WW_AM:
-              CHP.StateMachine.StateChange(Code3::CODE_3_PK);
+              CHP.EmergencyStateMachine.StateChange(Code3::CODE_3_PK);
               break;
             case Code3::CODE_3_PK:
-              CHP.StateMachine.StateChange(Code3::OFF);
+              CHP.EmergencyStateMachine.StateChange(Code3::OFF);
               break;
           }
-          printState(CHP.StateMachine.State);
+          printState(CHP.EmergencyStateMachine.State);
           break;
       }
     }

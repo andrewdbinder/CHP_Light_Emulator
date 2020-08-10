@@ -1,7 +1,6 @@
 //
 // Created by Andrew on 7/5/2020.
 //
-#include <iostream>
 
 #ifndef CHP_V4_CHP_ENUMS_H
 #define CHP_V4_CHP_ENUMS_H
@@ -55,13 +54,6 @@ enum class IntermittentSiren {
   AIR_HORN,
   MANUAL
 };
-
-std::ostream& operator<<(std::ostream &os, const Code1 &c);
-std::ostream& operator<<(std::ostream &os, const Code2 &c);
-std::ostream& operator<<(std::ostream &os, const Code3 &c);
-std::ostream& operator<<(std::ostream &os, const TrafficAdvisor &c);
-std::ostream& operator<<(std::ostream &os, const ContinuousSiren &c);
-std::ostream& operator<<(std::ostream &os, const IntermittentSiren &c);
 
 bool Active(Code1 &c);
 bool Active(Code2 &c);

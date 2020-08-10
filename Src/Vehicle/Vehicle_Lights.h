@@ -24,12 +24,12 @@ class Vehicle_Lights {
     DRL_Turn_P,
 
     // Front turn signal, LED ON/OFF
-    Turn_LED_F_D,
-    Turn_LED_F_P,
+    Turn_F_D,
+    Turn_F_P,
 
     // Front turn signal, Incandescent ON/DIM/OFF; ie crown vic
-    Turn_INC_F_D,
-    Turn_INC_F_P,
+    Turn_Park_F_D,
+    Turn_Park_F_P,
 
     // Front Park Lights
     Park_F,
@@ -63,6 +63,6 @@ class Vehicle_Lights {
     Park_R;
 
   Vehicle_Lights();
-};
+  };
 
 #endif //CHP_V4_VEHICLE_LIGHTS_H

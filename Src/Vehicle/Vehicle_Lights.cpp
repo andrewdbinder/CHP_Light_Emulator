@@ -12,11 +12,11 @@ Vehicle_Lights::Vehicle_Lights() {
   DRL_Turn_D = VehicleLightState::OFF;
   DRL_Turn_P = VehicleLightState::OFF;
 
-  Turn_LED_F_D = VehicleLightState::OFF;
-  Turn_LED_F_P = VehicleLightState::OFF;
+  Turn_F_D = VehicleLightState::OFF;
+  Turn_F_P = VehicleLightState::OFF;
 
-  Turn_INC_F_D = VehicleLightState::OFF;
-  Turn_INC_F_P = VehicleLightState::OFF;
+  Turn_Park_F_D = VehicleLightState::OFF;
+  Turn_Park_F_P = VehicleLightState::OFF;
 
   Park_F = VehicleLightState::OFF;
 
@@ -40,3 +40,4 @@ Vehicle_Lights::Vehicle_Lights() {
 
   Park_R = VehicleLightState::OFF;
 }
+
