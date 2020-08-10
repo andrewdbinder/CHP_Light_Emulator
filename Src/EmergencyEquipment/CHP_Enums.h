@@ -5,30 +5,24 @@
 #ifndef CHP_V4_CHP_ENUMS_H
 #define CHP_V4_CHP_ENUMS_H
 
-enum class EmergencyStateEvent {
+enum class EmergencyStateEvent : char {
   ALL_OFF,
-
-  AIR_HORN_ON,
-  AIR_HORN_OFF,
-
-  MANUAL_ON,
-  MANUAL_OFF
 };
 
-enum class Code1 {
+enum class Code1 : char {
   OFF,
   REAR_AMBER,
   FORWARD_CUTOFF,
   AMBER_ONLY
 };
 
-enum class Code2 {
+enum class Code2 : char {
   OFF,
   FORWARD_RED,
   FORWARD_RED_WW
 };
 
-enum class Code3 {
+enum class Code3 : char {
   OFF,
   CODE_3,
   CODE_3_WW,
@@ -36,20 +30,20 @@ enum class Code3 {
   CODE_3_PK
 };
 
-enum class TrafficAdvisor {
+enum class TrafficAdvisor : char {
   OFF,
   LEFT,
   RIGHT,
   SPLIT
 };
 
-enum class ContinuousSiren {
+enum class ContinuousSiren : char {
   OFF,
   WAIL,
   YELP
 };
 
-enum class IntermittentSiren {
+enum class IntermittentSiren : char {
   OFF,
   AIR_HORN,
   MANUAL
