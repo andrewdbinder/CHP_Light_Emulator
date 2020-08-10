@@ -380,6 +380,51 @@ char CHP::StateChange(char input) {
       return EmergencyStateMachine.StateChange(IntermittentSiren::AIR_HORN);
     case '/':
       return EmergencyStateMachine.StateChange(IntermittentSiren::MANUAL);
+
+    // Indicators
+    case '-':
+      return VehicleStateMachine.StateChange(Indicators::OFF);
+    case '[':
+      return VehicleStateMachine.StateChange(Indicators::TURN_LEFT);
+    case ']':
+      return VehicleStateMachine.StateChange(Indicators::TURN_RIGHT);
+    case '=':
+      return VehicleStateMachine.StateChange(Indicators::HAZARD);
+
+    // Gear
+    case 'P':
+      return VehicleStateMachine.StateChange(Gear::PARK);
+    case 'o':
+      return VehicleStateMachine.StateChange(Gear::REVERSE);
+    case 'i':
+      return VehicleStateMachine.StateChange(Gear::DRIVE);
+
+    // Headlights
+    case 't':
+      return VehicleStateMachine.StateChange(Headlights::OFF);
+    case 'y':
+      return VehicleStateMachine.StateChange(Headlights::PARK);
+    case 'u':
+      return VehicleStateMachine.StateChange(Headlights::ON);
+
+    // Brights
+    case 'T':
+      return VehicleStateMachine.StateChange(Brights::OFF);
+    case 'U':
+      return VehicleStateMachine.StateChange(Brights::ON);
+
+    // Brakes
+    case 'V':
+      return VehicleStateMachine.StateChange(Brakes::OFF);
+    case 'v':
+      return VehicleStateMachine.StateChange(Brakes::ON);
+
+    // Horn
+    case 'R':
+      return VehicleStateMachine.StateChange(Horn::OFF);
+    case 'r':
+      return VehicleStateMachine.StateChange(Horn::ON);
+
   }
   return 0;
 }

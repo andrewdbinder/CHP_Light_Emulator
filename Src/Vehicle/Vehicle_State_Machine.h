@@ -46,13 +46,19 @@ class Vehicle_States {
   Brights Brights_S;
   Brakes Brakes_S;
   Indicators Indicator_S;
+  Horn Horn_S;
 };
 
 class Vehicle_State_Machine {
  public:
   Vehicle_States State;
 
- void StateChange(Indicators);
+  char StateChange(Indicators);
+  char StateChange(Gear);
+  char StateChange(Headlights);
+  char StateChange(Brights);
+  char StateChange(Brakes);
+  char StateChange(Horn);
 
 };
 
