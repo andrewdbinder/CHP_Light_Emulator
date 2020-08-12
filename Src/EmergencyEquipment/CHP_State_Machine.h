@@ -16,6 +16,15 @@ class CHP_Emergency_States {
 
   ContinuousSiren ConSiren_S;
   IntermittentSiren IntSiren_S;
+
+  bool
+    Takedown_S,
+    D_Alley_S,
+    P_Alley_S,
+    D_Spot_S,
+    P_Spot_S;
+
+  CHP_Emergency_States();
 };
 
 class CHP_State_Machine {
@@ -30,6 +39,7 @@ class CHP_State_Machine {
   char StateChange(ContinuousSiren event);
   char StateChange(IntermittentSiren event);
 
+  char StateChange(Scene event);
 };
 
 #endif //CHP_V4_CHP_STATE_MACHINE_H

@@ -14,6 +14,8 @@ char CHP_State_Machine::StateChange(EmergencyStateEvent event) {
       State.ConSiren_S = ContinuousSiren::OFF;
       return '0';
   }
+
+  return 1;
 }
 
 char CHP_State_Machine::StateChange(Code1 event) {
@@ -43,6 +45,8 @@ char CHP_State_Machine::StateChange(Code1 event) {
       State.TrafficAdvisor_S = TrafficAdvisor::OFF;
       return 'a';
   }
+
+  return 1;
 }
 
 char CHP_State_Machine::StateChange(Code2 event) {
@@ -63,6 +67,8 @@ char CHP_State_Machine::StateChange(Code2 event) {
       State.Code3_S = Code3::OFF;
       return 'w';
   }
+
+  return 1;
 }
 
 char CHP_State_Machine::StateChange(Code3 event) {
@@ -96,6 +102,8 @@ char CHP_State_Machine::StateChange(Code3 event) {
       State.Code3_S = Code3::CODE_3_PK;
       return 'c';
   }
+
+  return 1;
 }
 
 char CHP_State_Machine::StateChange(TrafficAdvisor event) {
@@ -119,6 +127,8 @@ char CHP_State_Machine::StateChange(TrafficAdvisor event) {
       State.TrafficAdvisor_S = TrafficAdvisor::SPLIT;
       return 'k';
   }
+
+  return 1;
 }
 
 char CHP_State_Machine::StateChange(ContinuousSiren event) {
@@ -139,6 +149,8 @@ char CHP_State_Machine::StateChange(ContinuousSiren event) {
       }
       return 'm';
   }
+
+  return 1;
 }
 
 char CHP_State_Machine::StateChange(IntermittentSiren event) {
@@ -159,4 +171,57 @@ char CHP_State_Machine::StateChange(IntermittentSiren event) {
       }
       return '/';
   }
+
+  return 1;
+}
+char CHP_State_Machine::StateChange(Scene event) {
+  switch (event) {
+    case Scene::TAKEDOWN_OFF:
+      State.Takedown_S = false;
+      return '&';
+    case Scene::TAKEDOWN_ON:
+      State.Takedown_S = true;
+      return '7';
+    case Scene::D_ALLEY_OFF:
+      State.D_Alley_S = false;
+      return '^';
+    case Scene::D_ALLEY_ON:
+      State.D_Alley_S = true;
+      return '6';
+    case Scene::P_ALLEY_OFF:
+      State.P_Alley_S = false;
+      return '*';
+    case Scene::P_ALLEY_ON:
+      State.P_Alley_S = true;
+      return '8';
+    case Scene::D_SPOT_OFF:
+      State.D_Spot_S = false;
+      return '$';
+    case Scene::D_SPOT_ON:
+      State.D_Spot_S = true;
+      return '4';
+    case Scene::P_SPOT_OFF:
+      State.P_Spot_S = false;
+      return '%';
+    case Scene::P_SPOT_ON:
+      State.P_Spot_S = true;
+      return '5';
+  }
+
+  return 1;
+}
+CHP_Emergency_States::CHP_Emergency_States() {
+  Code1_S = Code1::OFF;
+  Code2_S = Code2::OFF;
+  Code3_S = Code3::OFF;
+  TrafficAdvisor_S = TrafficAdvisor::OFF;
+
+  ConSiren_S = ContinuousSiren::OFF;
+  IntSiren_S = IntermittentSiren::OFF;
+
+  Takedown_S = false;
+  D_Alley_S = false;
+  P_Alley_S = false;
+  D_Spot_S = false;
+  P_Spot_S = false;
 }

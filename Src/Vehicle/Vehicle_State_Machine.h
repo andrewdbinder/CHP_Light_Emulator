@@ -47,6 +47,8 @@ class Vehicle_States {
   Brakes Brakes_S;
   Indicators Indicator_S;
   Horn Horn_S;
+
+  Vehicle_States();
 };
 
 class Vehicle_State_Machine {
@@ -60,6 +62,7 @@ class Vehicle_State_Machine {
   char StateChange(Brakes);
   char StateChange(Horn);
 
+  Vehicle_State_Machine();
 };
 
 #endif //CHP_V4_VEHICLE_STATE_MACHINE_H

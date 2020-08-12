@@ -18,18 +18,21 @@ char Vehicle_State_Machine::StateChange(Indicators event) {
   }
 
   // TODO Start indicator timer if necessary
+  return 1;
 }
 char Vehicle_State_Machine::StateChange(Gear event) {
   State.Gear_S = event;
 
   switch (event) {
     case Gear::PARK:
-      return 'P';
+      return 'p';
     case Gear::REVERSE:
       return 'o';
     case Gear::DRIVE:
       return 'i';
   }
+
+  return 1;
 }
 
 char Vehicle_State_Machine::StateChange(Headlights event) {
@@ -43,6 +46,8 @@ char Vehicle_State_Machine::StateChange(Headlights event) {
     case Headlights::ON:
       return 'u';
   }
+
+  return 1;
 }
 
 char Vehicle_State_Machine::StateChange(Brights event) {
@@ -54,6 +59,8 @@ char Vehicle_State_Machine::StateChange(Brights event) {
     case Brights::ON:
       return 'U';
   }
+
+  return 1;
 }
 
 char Vehicle_State_Machine::StateChange(Brakes event) {
@@ -65,6 +72,8 @@ char Vehicle_State_Machine::StateChange(Brakes event) {
     case Brakes::ON:
       return 'v';
   }
+
+  return 1;
 }
 
 char Vehicle_State_Machine::StateChange(Horn event) {
@@ -76,4 +85,16 @@ char Vehicle_State_Machine::StateChange(Horn event) {
     case Horn::ON:
       return 'r';
   }
+
+  return 1;
+}
+Vehicle_State_Machine::Vehicle_State_Machine() = default;
+
+Vehicle_States::Vehicle_States() {
+  Gear_S = Gear::DRIVE;
+  Headlight_S = Headlights::OFF;
+  Brakes_S = Brakes::OFF;
+  Brights_S = Brights::OFF;
+  Indicator_S = Indicators::OFF;
+  Horn_S = Horn::OFF;
 }

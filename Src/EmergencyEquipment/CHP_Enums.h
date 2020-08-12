@@ -49,6 +49,23 @@ enum class IntermittentSiren : char {
   MANUAL
 };
 
+enum class Scene : char {
+  TAKEDOWN_OFF,
+  TAKEDOWN_ON,
+
+  D_ALLEY_OFF,
+  D_ALLEY_ON,
+
+  P_ALLEY_OFF,
+  P_ALLEY_ON,
+
+  D_SPOT_OFF,
+  D_SPOT_ON,
+
+  P_SPOT_OFF,
+  P_SPOT_ON
+};
+
 bool Active(Code1 &c);
 bool Active(Code2 &c);
 bool Active(Code3 &c);
