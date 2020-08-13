@@ -3,9 +3,11 @@
 //
 
 #include "CHP.h"
-CHP::CHP(bool *main_ww_tim, bool *hdl_ww_tim, bool *ind_ww_tim) {
+CHP::CHP(bool *main_ww_tim, bool *yelp_tim, bool *hdl_ww_tim, bool *ind_ww_tim) {
   // Emergency Lights WW1
   MAIN_TIM = main_ww_tim;
+
+  YELP_TIM = yelp_tim;
 
   // Headlight Flasher
   HDL_TIM = hdl_ww_tim;
@@ -216,7 +218,43 @@ void CHP::updateEmergencyOutput() {
             EmergencyLights.PB_PS_Outer = EmergencyLightState::OFF;
           }
         } else {
-          // TODO: "Wall of light" Yelp pattern
+          if (*YELP_TIM) {
+            EmergencyLights.LB_FR_Inner_Red = EmergencyLightState::ON;
+            EmergencyLights.LB_FR_Corner_Red = EmergencyLightState::ON;
+
+            EmergencyLights.PB_DR_Inner = EmergencyLightState::ON;
+            EmergencyLights.PB_DR_Outer = EmergencyLightState::ON;
+
+            EmergencyLights.LB_FR_Inner_Blue = EmergencyLightState::ON;
+            EmergencyLights.LB_FR_Outer_Blue = EmergencyLightState::ON;
+            EmergencyLights.LB_FR_Corner_Blue = EmergencyLightState::ON;
+
+            EmergencyLights.Dash_Blue = EmergencyLightState::ON;
+
+            EmergencyLights.PB_PS_Inner = EmergencyLightState::ON;
+            EmergencyLights.PB_PS_Outer = EmergencyLightState::ON;
+
+            EmergencyLights.LB_Side_Blue = EmergencyLightState::ON;
+            EmergencyLights.LB_Side_Red = EmergencyLightState::ON;
+          } else {
+            EmergencyLights.LB_FR_Inner_Red = EmergencyLightState::OFF;
+            EmergencyLights.LB_FR_Corner_Red = EmergencyLightState::OFF;
+
+            EmergencyLights.PB_DR_Inner = EmergencyLightState::OFF;
+            EmergencyLights.PB_DR_Outer = EmergencyLightState::OFF;
+
+            EmergencyLights.LB_FR_Inner_Blue = EmergencyLightState::OFF;
+            EmergencyLights.LB_FR_Outer_Blue = EmergencyLightState::OFF;
+            EmergencyLights.LB_FR_Corner_Blue = EmergencyLightState::OFF;
+
+            EmergencyLights.Dash_Blue = EmergencyLightState::OFF;
+
+            EmergencyLights.PB_PS_Inner = EmergencyLightState::OFF;
+            EmergencyLights.PB_PS_Outer = EmergencyLightState::OFF;
+
+            EmergencyLights.LB_Side_Blue = EmergencyLightState::OFF;
+            EmergencyLights.LB_Side_Red = EmergencyLightState::OFF;
+          }
         }
 
       } else {
@@ -258,15 +296,11 @@ void CHP::updateEmergencyOutput() {
           EmergencyLights.LB_FR_Outer_Blue = EmergencyLightState::ON;
           EmergencyLights.LB_FR_Corner_Blue = EmergencyLightState::ON;
 
-          EmergencyLights.Dash_Blue = EmergencyLightState::ON;
-
           EmergencyLights.PB_PS_Inner = EmergencyLightState::ON;
           EmergencyLights.PB_PS_Outer = EmergencyLightState::ON;
         } else {
           EmergencyLights.LB_FR_Outer_Blue = EmergencyLightState::OFF;
           EmergencyLights.LB_FR_Corner_Blue = EmergencyLightState::OFF;
-
-          EmergencyLights.Dash_Blue = EmergencyLightState::OFF;
 
           EmergencyLights.PB_PS_Inner = EmergencyLightState::OFF;
           EmergencyLights.PB_PS_Outer = EmergencyLightState::OFF;
@@ -277,8 +311,6 @@ void CHP::updateEmergencyOutput() {
         EmergencyLights.LB_FR_Corner_Blue = EmergencyLightState::STEADY_BURN;
 
         EmergencyLights.LB_FR_Corner_Red = EmergencyLightState::STEADY_BURN;
-
-        EmergencyLights.Dash_Blue = EmergencyLightState::STEADY_BURN;
 
         EmergencyLights.PB_DR_Inner = EmergencyLightState::STEADY_BURN;
         EmergencyLights.PB_DR_Outer = EmergencyLightState::STEADY_BURN;
@@ -360,41 +392,108 @@ void CHP::updateEmergencyOutput() {
         }
       }
       break;
-    case Code3::CODE_3_PK:break;
+    case Code3::CODE_3_PK:
+      EmergencyLights.LB_FR_Outer_Red = EmergencyLightState::STEADY_BURN;
+      EmergencyLights.Dash_Red = EmergencyLightState::STEADY_BURN;
+
+      if (MAIN_TIM[0]) {
+        EmergencyLights.LB_FR_Inner_Red = EmergencyLightState::ON;
+        EmergencyLights.LB_FR_Corner_Red = EmergencyLightState::ON;
+
+        EmergencyLights.PB_DR_Inner = EmergencyLightState::ON;
+        EmergencyLights.PB_DR_Outer = EmergencyLightState::ON;
+      } else {
+        EmergencyLights.LB_FR_Inner_Red = EmergencyLightState::OFF;
+        EmergencyLights.LB_FR_Corner_Red = EmergencyLightState::OFF;
+
+        EmergencyLights.PB_DR_Inner = EmergencyLightState::OFF;
+        EmergencyLights.PB_DR_Outer = EmergencyLightState::OFF;
+      }
+
+      if (MAIN_TIM[1]) {
+        EmergencyLights.LB_FR_Inner_Blue = EmergencyLightState::ON;
+        EmergencyLights.LB_FR_Outer_Blue = EmergencyLightState::ON;
+        EmergencyLights.LB_FR_Corner_Blue = EmergencyLightState::ON;
+
+        EmergencyLights.Dash_Blue = EmergencyLightState::ON;
+
+        EmergencyLights.PB_PS_Inner = EmergencyLightState::ON;
+        EmergencyLights.PB_PS_Outer = EmergencyLightState::ON;
+      } else {
+        EmergencyLights.LB_FR_Inner_Blue = EmergencyLightState::OFF;
+        EmergencyLights.LB_FR_Outer_Blue = EmergencyLightState::OFF;
+        EmergencyLights.LB_FR_Corner_Blue = EmergencyLightState::OFF;
+
+        EmergencyLights.Dash_Blue = EmergencyLightState::OFF;
+
+        EmergencyLights.PB_PS_Inner = EmergencyLightState::OFF;
+        EmergencyLights.PB_PS_Outer = EmergencyLightState::OFF;
+      }
+      break;
   }
 
   // make rear pattern active in appropriate code states
-  if (Active(EmergencyStateMachine.State.Code3_S) &&
+  if (!Active(EmergencyStateMachine.State.TrafficAdvisor_S) &&
+      (Active(EmergencyStateMachine.State.Code3_S) &&
       EmergencyStateMachine.State.Code3_S != Code3::CODE_3_WW_AM  ||
-      Active(EmergencyStateMachine.State.Code2_S) &&
-      !Active(EmergencyStateMachine.State.TrafficAdvisor_S)) {
-    if (MAIN_TIM[0]) {
-      EmergencyLights.LB_RE_Blue = EmergencyLightState::ON;
-      EmergencyLights.LB_RE_Corner_Blue = EmergencyLightState::ON;
+      Active(EmergencyStateMachine.State.Code2_S))) {
 
-      EmergencyLights.LB_RE_Red = EmergencyLightState::ON;
-      EmergencyLights.LB_RE_Corner_Red = EmergencyLightState::ON;
+    if (EmergencyStateMachine.State.ConSiren_S == ContinuousSiren::YELP &&
+        EmergencyStateMachine.State.Code3_S == Code3::CODE_3 &&
+        VehicleStateMachine.State.Gear_S != Gear::PARK) {
+
+      if (*YELP_TIM) {
+        EmergencyLights.LB_RE_Blue = EmergencyLightState::ON;
+        EmergencyLights.LB_RE_Corner_Blue = EmergencyLightState::ON;
+
+        EmergencyLights.LB_RE_Red = EmergencyLightState::ON;
+        EmergencyLights.LB_RE_Corner_Red = EmergencyLightState::ON;
+
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+      } else {
+        EmergencyLights.LB_RE_Blue = EmergencyLightState::OFF;
+        EmergencyLights.LB_RE_Corner_Blue = EmergencyLightState::OFF;
+
+        EmergencyLights.LB_RE_Red = EmergencyLightState::OFF;
+        EmergencyLights.LB_RE_Corner_Red = EmergencyLightState::OFF;
+
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+      }
     } else {
-      EmergencyLights.LB_RE_Blue = EmergencyLightState::OFF;
-      EmergencyLights.LB_RE_Corner_Blue = EmergencyLightState::OFF;
+      if (MAIN_TIM[0]) {
+        EmergencyLights.LB_RE_Blue = EmergencyLightState::ON;
+        EmergencyLights.LB_RE_Corner_Blue = EmergencyLightState::ON;
 
-      EmergencyLights.LB_RE_Red = EmergencyLightState::OFF;
-      EmergencyLights.LB_RE_Corner_Red = EmergencyLightState::OFF;
-    }
+        EmergencyLights.LB_RE_Red = EmergencyLightState::ON;
+        EmergencyLights.LB_RE_Corner_Red = EmergencyLightState::ON;
+      } else {
+        EmergencyLights.LB_RE_Blue = EmergencyLightState::OFF;
+        EmergencyLights.LB_RE_Corner_Blue = EmergencyLightState::OFF;
 
-    if (MAIN_TIM[1]) {
-      EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
-      EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
-      EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
-    } else {
-      EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
-      EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
-      EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_RE_Red = EmergencyLightState::OFF;
+        EmergencyLights.LB_RE_Corner_Red = EmergencyLightState::OFF;
+      }
+
+      if (MAIN_TIM[1]) {
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+      } else {
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+      }
     }
   }
 
   // Side lightbar lights: always active in code 2/3
-  if (Active(EmergencyStateMachine.State.Code2_S) || Active(EmergencyStateMachine.State.Code3_S)) {
+  if (Active(EmergencyStateMachine.State.Code2_S) ||
+      Active(EmergencyStateMachine.State.Code3_S) &&
+      EmergencyStateMachine.State.ConSiren_S != ContinuousSiren::YELP) {
     if (MAIN_TIM[0]) {
       EmergencyLights.LB_Side_Red = EmergencyLightState::ON;
     } else {
@@ -407,6 +506,14 @@ void CHP::updateEmergencyOutput() {
       EmergencyLights.LB_Side_Blue = EmergencyLightState::OFF;
     }
   }
+
+  // Traffic advisor time
+  if (Active(EmergencyStateMachine.State.TrafficAdvisor_S)) {
+    EmergencyLights.LB_RE_Corner_Blue = EmergencyLightState::STEADY_BURN;
+    EmergencyLights.LB_RE_Blue = EmergencyLightState::STEADY_BURN;
+  }
+
+  // TODO: Traffic advisor
 
 
   // Scene lights
@@ -574,6 +681,33 @@ void CHP::updateVehicleOutput() {
     }
   }
 
+}
+
+// Horn tap button function
+
+void CHP::updateSirenOutput() {
+  if (VehicleStateMachine.State.Gear_S != Gear::PARK) {
+    if (EmergencyStateMachine.State.Code2_S == Code2::FORWARD_RED) {
+      EmergencyLights.Siren = (EmergencyStateMachine.State.IntSiren_S == IntermittentSiren::AIR_HORN
+          ? SirenState::AIR_HORN : SirenState::OFF);
+    } else if (EmergencyStateMachine.State.Code2_S == Code2::FORWARD_RED_WW ||
+        Active(EmergencyStateMachine.State.Code3_S)) {
+      switch (EmergencyStateMachine.State.ConSiren_S) {
+        case ContinuousSiren::OFF:
+          EmergencyLights.Siren = (EmergencyStateMachine.State.IntSiren_S == IntermittentSiren::MANUAL
+                                   ? SirenState::MANUAL : SirenState::OFF);
+          break;
+        case ContinuousSiren::WAIL:
+          EmergencyLights.Siren = SirenState::WAIL;
+          break;
+        case ContinuousSiren::YELP:
+          EmergencyLights.Siren = SirenState::YELP;
+          break;
+      }
+    } else {
+      EmergencyLights.Siren = (VehicleStateMachine.State.Horn_S == Horn::ON ? SirenState::HORN : SirenState :: OFF);
+    }
+  }
 }
 
 char CHP::StateChange(char input) {

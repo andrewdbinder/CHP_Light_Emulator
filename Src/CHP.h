@@ -13,7 +13,8 @@
 class CHP {
  public:
 
-  CHP(bool *main_ww_tim, bool *hdl_ww_tim, bool *ind_ww_tim);
+  CHP(bool *main_ww_tim, bool *yelp_tim, bool *hdl_ww_tim, bool *ind_ww_tim);
+
 
   bool
     *MAIN_TIM,
@@ -33,6 +34,7 @@ class CHP {
   char StateChange(char);
   void updateEmergencyOutput();
   void updateVehicleOutput();
+  void updateSirenOutput();
 
 };
 
