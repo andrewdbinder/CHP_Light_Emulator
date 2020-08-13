@@ -11,6 +11,15 @@ enum class EmergencyLightState : char {
   STEADY_BURN
 };
 
+enum class SirenState : char {
+  OFF,
+  HORN,
+  WAIL,
+  YELP,
+  MANUAL,
+  AIR_HORN
+};
+
 class CHP_Lights {
  public:
   // Lightbar
@@ -63,6 +72,8 @@ class CHP_Lights {
   bool
       Spot_DR,
       Spot_PS;
+
+  SirenState Siren;
 
   CHP_Lights();
 };

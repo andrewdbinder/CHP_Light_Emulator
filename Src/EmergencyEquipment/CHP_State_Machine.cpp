@@ -12,6 +12,7 @@ char CHP_State_Machine::StateChange(EmergencyStateEvent event) {
       State.Code3_S = Code3::OFF;
       State.TrafficAdvisor_S = TrafficAdvisor::OFF;
       State.ConSiren_S = ContinuousSiren::OFF;
+      State.IntSiren_S = IntermittentSiren::OFF;
       return '0';
   }
 
