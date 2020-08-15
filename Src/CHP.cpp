@@ -972,7 +972,7 @@ void CHP::updateEmergencyOutput() {
             }
 
           } else {
-            if (*AUX_CNT == 46) {
+            if (*AUX_CNT >= 46) {
               *AUX_CNT = 0;
             }
 
