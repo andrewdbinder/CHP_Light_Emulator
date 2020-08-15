@@ -29,7 +29,8 @@ enum class Code3 : char {
   CODE_3,
   CODE_3_WW,
   CODE_3_WW_AM,
-  CODE_3_PK
+  CODE_3_PK,
+  CODE_3_NEW_YELP
 };
 
 enum class TrafficAdvisor : char {

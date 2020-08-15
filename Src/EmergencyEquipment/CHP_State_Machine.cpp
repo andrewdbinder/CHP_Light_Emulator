@@ -116,6 +116,13 @@ char CHP_State_Machine::StateChange(Code3 event) {
       State.Code2_S = Code2::OFF;
       State.Code3_S = Code3::CODE_3_PK;
       return 'c';
+
+
+    case Code3::CODE_3_NEW_YELP:
+      State.Code1_S = Code1::OFF;
+      State.Code2_S = Code2::OFF;
+      State.Code3_S = Code3::CODE_3_NEW_YELP;
+      return '#';
   }
 
   return 1;
