@@ -44,6 +44,15 @@ CHP::CHP() {
   VehicleLights = Vehicle_Lights();
 }
 
+char CHP::ResetAll() {
+  EmergencyStateMachine = CHP_State_Machine();
+  VehicleStateMachine = Vehicle_State_Machine();
+
+  EmergencyLights = CHP_Lights();
+  VehicleLights = Vehicle_Lights();
+  return ')';
+}
+
 char CHP::HornTap(bool pressed) {
 
   if (VehicleStateMachine.State.Gear_S == Gear::PARK) {
@@ -74,7 +83,6 @@ char CHP::HornTap(bool pressed) {
     return (pressed ? VehicleStateMachine.StateChange(Horn::ON) : VehicleStateMachine.StateChange(Horn::OFF));
   }
 }
-
 
 void CHP::updateEmergencyOutput() {
   switch (EmergencyStateMachine.State.Code1_S) {
@@ -1627,6 +1635,11 @@ char CHP::StateChange(char input) {
       return EmergencyStateMachine.StateChange(Scene::P_SPOT_ON);
     case '%':
       return EmergencyStateMachine.StateChange(Scene::P_SPOT_OFF);
+
+    // Reset ALL
+    case ')':
+      return ResetAll();
+
   }
   return 1;
 }
