@@ -13,7 +13,8 @@
 class CHP {
  public:
 
-  CHP(bool *main_ww_tim, bool *yelp_tim, bool *hdl_ww_tim, bool *ind_ww_tim);
+  CHP(bool *main_ww_tim, bool *yelp_tim, bool *hdl_ww_tim, bool *ind_ww_tim, short *ta_map, short *aux_map);
+  CHP();
 
 
   bool
@@ -23,7 +24,8 @@ class CHP {
     *IND_TIM;
 
   short
-    *YELP_CNT;
+    *TA_CNT,
+    *AUX_CNT;
 
   CHP_Lights EmergencyLights;
   CHP_State_Machine EmergencyStateMachine;

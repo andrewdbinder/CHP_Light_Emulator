@@ -13,7 +13,9 @@ enum class Code1 : char {
   OFF,
   REAR_AMBER,
   FORWARD_CUTOFF,
-  AMBER_ONLY
+  AMBER_ONLY,
+  CALTRANS,
+  PCSO
 };
 
 enum class Code2 : char {

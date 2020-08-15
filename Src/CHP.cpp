@@ -3,7 +3,7 @@
 //
 
 #include "CHP.h"
-CHP::CHP(bool *main_ww_tim, bool *yelp_tim, bool *hdl_ww_tim, bool *ind_ww_tim) {
+CHP::CHP(bool *main_ww_tim, bool *yelp_tim, bool *hdl_ww_tim, bool *ind_ww_tim, short *ta_map, short *aux_map) {
   // Emergency Lights WW1
   MAIN_TIM = main_ww_tim;
 
@@ -15,9 +15,35 @@ CHP::CHP(bool *main_ww_tim, bool *yelp_tim, bool *hdl_ww_tim, bool *ind_ww_tim) 
   // Indicator Flasher
   IND_TIM = ind_ww_tim;
 
+  // TA Counter
+  TA_CNT = ta_map;
+
+  // AUX Counter
+  AUX_CNT = aux_map;
+
   EmergencyLights = CHP_Lights();
   VehicleLights = Vehicle_Lights();
 }
+
+CHP::CHP() {
+  // Emergency Lights WW1
+  MAIN_TIM = nullptr;
+
+  YELP_TIM = nullptr;
+
+  // Headlight Flasher
+  HDL_TIM = nullptr;
+
+  // Indicator Flasher
+  IND_TIM = nullptr;
+
+  // TA Counter
+  TA_CNT = nullptr;
+
+  EmergencyLights = CHP_Lights();
+  VehicleLights = Vehicle_Lights();
+}
+
 
 void CHP::updateEmergencyOutput() {
   switch (EmergencyStateMachine.State.Code1_S) {
@@ -70,6 +96,153 @@ void CHP::updateEmergencyOutput() {
       break;
 
     case Code1::AMBER_ONLY:
+      if (MAIN_TIM[0]) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+      } else {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+      }
+
+      if (MAIN_TIM[1]) {
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+      } else {
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+      }
+      break;
+
+    case Code1::CALTRANS:
+      if (*AUX_CNT >= 0 && *AUX_CNT < 20) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+      } else if (*AUX_CNT >= 20 && *AUX_CNT < 40) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+      } else if (*AUX_CNT >= 40 && *AUX_CNT < 60) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+      } else if (*AUX_CNT >= 60 && *AUX_CNT < 80) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+      } else if (*AUX_CNT >= 80 && *AUX_CNT < 85) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+      } else if (*AUX_CNT >= 85 && *AUX_CNT < 86) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+      } else if (*AUX_CNT >= 86 && *AUX_CNT < 91) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+      } else if (*AUX_CNT >= 91 && *AUX_CNT < 92) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+      } else if (*AUX_CNT >= 92 && *AUX_CNT < 97) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+      } else if (*AUX_CNT >= 97 && *AUX_CNT < 98) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+      } else if (*AUX_CNT >= 98 && *AUX_CNT < 103) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+      } else if (*AUX_CNT >= 103 && *AUX_CNT < 123) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+      } else if (*AUX_CNT >= 123 && *AUX_CNT < 128) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+      } else if (*AUX_CNT >= 128 && *AUX_CNT < 129) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+      } else if (*AUX_CNT >= 129 && *AUX_CNT < 134) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+      } else if (*AUX_CNT >= 134 && *AUX_CNT < 135) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+      } else if (*AUX_CNT >= 135 && *AUX_CNT < 140) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+      } else if (*AUX_CNT >= 140 && *AUX_CNT < 141) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+      } else if (*AUX_CNT >= 141 && *AUX_CNT < 146) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+      } else if (*AUX_CNT >= 146 && *AUX_CNT < 166) {
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+      }
+
+      break;
+    case Code1::PCSO:
+      EmergencyLights.LB_RE_Corner_Blue = EmergencyLightState::STEADY_BURN;
+      EmergencyLights.LB_RE_Blue = EmergencyLightState::STEADY_BURN;
+      EmergencyLights.LB_RE_Corner_Red = EmergencyLightState::STEADY_BURN;
+      EmergencyLights.LB_RE_Red = EmergencyLightState::STEADY_BURN;
+
       if (MAIN_TIM[0]) {
         EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
         EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
@@ -218,6 +391,7 @@ void CHP::updateEmergencyOutput() {
             EmergencyLights.PB_PS_Outer = EmergencyLightState::OFF;
           }
         } else {
+          // Yelp pattern
           if (*YELP_TIM) {
             EmergencyLights.LB_FR_Inner_Red = EmergencyLightState::ON;
             EmergencyLights.LB_FR_Corner_Red = EmergencyLightState::ON;
@@ -514,7 +688,198 @@ void CHP::updateEmergencyOutput() {
   }
 
   // TODO: Traffic advisor
-
+  if (EmergencyStateMachine.State.TrafficAdvisor_S == TrafficAdvisor::LEFT) {
+    switch (*TA_CNT) {
+      case 0:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+        break;
+      case 1:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+        break;
+      case 2:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+        break;
+      case 3:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+        break;
+      case 4:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+        break;
+      case 5:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+        break;
+      case 6:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+        break;
+      case 7:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+        break;
+      case 8:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+        break;
+      case 9:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+        break;
+    }
+  } else if (EmergencyStateMachine.State.TrafficAdvisor_S == TrafficAdvisor::RIGHT) {
+    switch (*TA_CNT) {
+      case 0:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+        break;
+      case 1:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+        break;
+      case 2:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+        break;
+      case 3:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+        break;
+      case 4:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+        break;
+      case 5:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+        break;
+      case 6:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+        break;
+      case 7:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+        break;
+      case 8:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+        break;
+      case 9:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+        break;
+    }
+  } else if (EmergencyStateMachine.State.TrafficAdvisor_S == TrafficAdvisor::SPLIT) {
+    switch (*TA_CNT) {
+      case 0:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+        break;
+      case 1:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+        break;
+      case 2:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+        break;
+      case 3:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+        break;
+      case 4:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
+        break;
+      case 5:
+        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
+        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+        break;
+    }
+  }
 
   // Scene lights
   if (EmergencyStateMachine.State.Takedown_S) {
@@ -681,6 +1046,11 @@ void CHP::updateVehicleOutput() {
     }
   }
 
+  if (VehicleStateMachine.State.Brights_S == Brights::ON) {
+    VehicleLights.Brights_D = VehicleLightState::ON;
+    VehicleLights.Brights_P = VehicleLightState::ON;
+  }
+
 }
 
 // Horn tap button function
@@ -727,6 +1097,10 @@ char CHP::StateChange(char input) {
       return EmergencyStateMachine.StateChange(Code1::FORWARD_CUTOFF);
     case 'a':
       return EmergencyStateMachine.StateChange(Code1::AMBER_ONLY);
+    case '!':
+      return EmergencyStateMachine.StateChange(Code1::CALTRANS);
+    case 'Q':
+      return EmergencyStateMachine.StateChange(Code1::PCSO);
 
     // Code 2
     case 's':

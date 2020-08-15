@@ -45,6 +45,20 @@ char CHP_State_Machine::StateChange(Code1 event) {
       State.Code3_S = Code3::OFF;
       State.TrafficAdvisor_S = TrafficAdvisor::OFF;
       return 'a';
+
+    case Code1::CALTRANS:
+      State.Code1_S = Code1::CALTRANS;
+      State.Code2_S = Code2::OFF;
+      State.Code3_S = Code3::OFF;
+      State.TrafficAdvisor_S = TrafficAdvisor::OFF;
+      return '!';
+
+    case Code1::PCSO:
+      State.Code1_S = Code1::PCSO;
+      State.Code2_S = Code2::OFF;
+      State.Code3_S = Code3::OFF;
+      State.TrafficAdvisor_S = TrafficAdvisor::OFF;
+      return 'Q';
   }
 
   return 1;
@@ -211,6 +225,7 @@ char CHP_State_Machine::StateChange(Scene event) {
 
   return 1;
 }
+
 CHP_Emergency_States::CHP_Emergency_States() {
   Code1_S = Code1::OFF;
   Code2_S = Code2::OFF;
