@@ -16,16 +16,15 @@ class CHP {
   CHP(bool *main_ww_tim, bool *yelp_tim, bool *hdl_ww_tim, bool *ind_ww_tim, short *ta_map, short *aux_map);
   CHP();
 
-
   bool
-    *MAIN_TIM,
-    *YELP_TIM,
-    *HDL_TIM,
-    *IND_TIM;
+      *MAIN_TIM,
+      *YELP_TIM,
+      *HDL_TIM,
+      *IND_TIM;
 
   short
-    *TA_CNT,
-    *AUX_CNT;
+      *TA_CNT,
+      *AUX_CNT;
 
   CHP_Lights EmergencyLights;
   CHP_State_Machine EmergencyStateMachine;
@@ -33,11 +32,12 @@ class CHP {
   Vehicle_Lights VehicleLights;
   Vehicle_State_Machine VehicleStateMachine;
 
+  char HornTap(bool);
+
   char StateChange(char);
   void updateEmergencyOutput();
   void updateVehicleOutput();
   void updateSirenOutput();
-
 };
 
 #endif //CHP_V4_CHP_H

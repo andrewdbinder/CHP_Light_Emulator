@@ -44,6 +44,37 @@ CHP::CHP() {
   VehicleLights = Vehicle_Lights();
 }
 
+char CHP::HornTap(bool pressed) {
+
+  if (VehicleStateMachine.State.Gear_S == Gear::PARK) {
+    return (pressed ? VehicleStateMachine.StateChange(Horn::ON) : VehicleStateMachine.StateChange(Horn::OFF));
+  } else {
+    if (EmergencyStateMachine.State.Code2_S == Code2::FORWARD_RED) {
+      return (pressed ? EmergencyStateMachine.StateChange(IntermittentSiren::AIR_HORN)
+                      : EmergencyStateMachine.StateChange(IntermittentSiren::OFF));
+    }
+
+    if (Active(EmergencyStateMachine.State.Code3_S) ||
+        EmergencyStateMachine.State.Code2_S == Code2::FORWARD_RED_WW) {
+      switch (EmergencyStateMachine.State.ConSiren_S) {
+        case ContinuousSiren::OFF:
+          return (pressed ? EmergencyStateMachine.StateChange(IntermittentSiren::MANUAL)
+                          : EmergencyStateMachine.StateChange(IntermittentSiren::OFF));
+
+        case ContinuousSiren::YELP:
+          return (pressed ? EmergencyStateMachine.StateChange(ContinuousSiren::WAIL)
+                          : '\n');
+
+        case ContinuousSiren::WAIL:
+          return (pressed ? EmergencyStateMachine.StateChange(ContinuousSiren::YELP)
+                          : '\n');
+      }
+    }
+
+    return (pressed ? VehicleStateMachine.StateChange(Horn::ON) : VehicleStateMachine.StateChange(Horn::OFF));
+  }
+}
+
 
 void CHP::updateEmergencyOutput() {
   switch (EmergencyStateMachine.State.Code1_S) {
@@ -1049,73 +1080,6 @@ void CHP::updateEmergencyOutput() {
       break;
   }
 
-  // make rear pattern active in appropriate code states
-//  if ( &&
-//      EmergencyStateMachine.State.Code3_S != Code3::CODE_3_WW_AM  &&
-//      EmergencyStateMachine.State.ConSiren_S != ContinuousSiren::YELP  ||
-//      Active(EmergencyStateMachine.State.Code2_S)) {
-//
-//    if (EmergencyStateMachine.State.ConSiren_S == ContinuousSiren::YELP &&
-//        EmergencyStateMachine.State.Code3_S == Code3::CODE_3 &&
-//        VehicleStateMachine.State.Gear_S != Gear::PARK) {
-
-
-//      if (Active(EmergencyStateMachine.State.Code2_S) ||
-//          Active(EmergencyStateMachine.State.Code3_S)) {
-//
-//        if ((
-//            Active(EmergencyStateMachine.State.Code3_S) &&
-//            EmergencyStateMachine.State.ConSiren_S != ContinuousSiren::YELP &&
-//            VehicleStateMachine.State.Gear_S != Gear::PARK) ||
-//            VehicleStateMachine.State.Gear_S == Gear::PARK) {
-//          if (MAIN_TIM[0]) {
-//            EmergencyLights.LB_Side_Red = EmergencyLightState::ON;
-//          } else {
-//            EmergencyLights.LB_Side_Red = EmergencyLightState::OFF;
-//          }
-//
-//          if (MAIN_TIM[1]) {
-//            EmergencyLights.LB_Side_Blue = EmergencyLightState::ON;
-//          } else {
-//            EmergencyLights.LB_Side_Blue = EmergencyLightState::OFF;
-//          }
-//        }
-//
-//        if (!Active(EmergencyStateMachine.State.TrafficAdvisor_S)) {
-//          if (Active(EmergencyStateMachine.State.Code3_S) &&
-//              EmergencyStateMachine.State.ConSiren_S != ContinuousSiren::YELP &&
-//              VehicleStateMachine.State.Gear_S != Gear::PARK) {
-//
-//            if (MAIN_TIM[0]) {
-//              EmergencyLights.LB_RE_Blue = EmergencyLightState::ON;
-//              EmergencyLights.LB_RE_Corner_Blue = EmergencyLightState::ON;
-//
-//              EmergencyLights.LB_RE_Red = EmergencyLightState::ON;
-//              EmergencyLights.LB_RE_Corner_Red = EmergencyLightState::ON;
-//            } else {
-//              EmergencyLights.LB_RE_Blue = EmergencyLightState::OFF;
-//              EmergencyLights.LB_RE_Corner_Blue = EmergencyLightState::OFF;
-//
-//              EmergencyLights.LB_RE_Red = EmergencyLightState::OFF;
-//              EmergencyLights.LB_RE_Corner_Red = EmergencyLightState::OFF;
-//            }
-//
-//            if (MAIN_TIM[1]) {
-//              EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
-//              EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
-//              EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
-//            } else {
-//              EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
-//              EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
-//              EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
-//            }
-//          }
-//        }
-//      }
-//
-//
-
-
   // Side lightbar lights: always active in code 2/3
   if (Active(EmergencyStateMachine.State.Code2_S) ||
       Active(EmergencyStateMachine.State.Code3_S) ||
@@ -1496,8 +1460,6 @@ void CHP::updateVehicleOutput() {
 
 }
 
-// TODO: Horn tap button function
-
 void CHP::updateSirenOutput() {
   if (VehicleStateMachine.State.Gear_S != Gear::PARK) {
     if (EmergencyStateMachine.State.Code2_S == Code2::FORWARD_RED) {
@@ -1520,6 +1482,8 @@ void CHP::updateSirenOutput() {
     } else {
       EmergencyLights.Siren = (VehicleStateMachine.State.Horn_S == Horn::ON ? SirenState::HORN : SirenState :: OFF);
     }
+  } else {
+    EmergencyLights.Siren = (VehicleStateMachine.State.Horn_S == Horn::ON ? SirenState::HORN : SirenState :: OFF);
   }
 }
 
@@ -1666,3 +1630,4 @@ char CHP::StateChange(char input) {
   }
   return 1;
 }
+
