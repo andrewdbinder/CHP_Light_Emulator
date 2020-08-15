@@ -33,6 +33,7 @@ class CHP {
   Vehicle_State_Machine VehicleStateMachine;
 
   char HornTap(bool);
+  char ResetAll();
 
   char StateChange(char);
   void updateEmergencyOutput();
