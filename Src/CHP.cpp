@@ -3,7 +3,7 @@
 //
 
 #include "CHP.h"
-CHP::CHP(bool *main_ww_tim, bool *yelp_tim, bool *hdl_ww_tim, bool *ind_ww_tim, short *ta_map, short *aux_map) {
+CHP::CHP(bool *main_ww_tim, bool *yelp_tim, bool *hdl_ww_tim, bool *ind_ww_tim, unsigned short *ta_map, unsigned short *aux_map) {
   // Emergency Lights WW1
   MAIN_TIM = main_ww_tim;
 
@@ -153,129 +153,34 @@ void CHP::updateEmergencyOutput() {
       break;
 
     case Code1::CALTRANS:
-      if (*AUX_CNT >= 0 && *AUX_CNT < 20) {
+      if (
+          (*AUX_CNT >=0 && *AUX_CNT < 20) ||
+          (*AUX_CNT >=40 && *AUX_CNT < 60) ||
+          (*AUX_CNT >=80 && *AUX_CNT < 85) ||
+          (*AUX_CNT >=86 && *AUX_CNT < 91) ||
+          (*AUX_CNT >=92 && *AUX_CNT < 97) ||
+          (*AUX_CNT >=98 && *AUX_CNT < 103) ||
+          (*AUX_CNT >=123 && *AUX_CNT < 128) ||
+          (*AUX_CNT >=129 && *AUX_CNT < 134) ||
+          (*AUX_CNT >=135 && *AUX_CNT < 140) ||
+          (*AUX_CNT >=141 && *AUX_CNT < 146))
+          {
         EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
         EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
         EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
         EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
         EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
-      } else if (*AUX_CNT >= 20 && *AUX_CNT < 40) {
-        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
-      } else if (*AUX_CNT >= 40 && *AUX_CNT < 60) {
-        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
-      } else if (*AUX_CNT >= 60 && *AUX_CNT < 80) {
-        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
-      } else if (*AUX_CNT >= 80 && *AUX_CNT < 85) {
-        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
-      } else if (*AUX_CNT >= 85 && *AUX_CNT < 86) {
-        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
-      } else if (*AUX_CNT >= 86 && *AUX_CNT < 91) {
-        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
-      } else if (*AUX_CNT >= 91 && *AUX_CNT < 92) {
-        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
-      } else if (*AUX_CNT >= 92 && *AUX_CNT < 97) {
-        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
-      } else if (*AUX_CNT >= 97 && *AUX_CNT < 98) {
-        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
-      } else if (*AUX_CNT >= 98 && *AUX_CNT < 103) {
-        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
-      } else if (*AUX_CNT >= 103 && *AUX_CNT < 123) {
-        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
-      } else if (*AUX_CNT >= 123 && *AUX_CNT < 128) {
-        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
-      } else if (*AUX_CNT >= 128 && *AUX_CNT < 129) {
-        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
-      } else if (*AUX_CNT >= 129 && *AUX_CNT < 134) {
-        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
-      } else if (*AUX_CNT >= 134 && *AUX_CNT < 135) {
-        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
-      } else if (*AUX_CNT >= 135 && *AUX_CNT < 140) {
-        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
-      } else if (*AUX_CNT >= 140 && *AUX_CNT < 141) {
-        EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
-        EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
-      } else if (*AUX_CNT >= 141 && *AUX_CNT < 146) {
-        EmergencyLights.LB_TA_1 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_2 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_3 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_4 = EmergencyLightState::ON;
-        EmergencyLights.LB_TA_5 = EmergencyLightState::ON;
-      } else if (*AUX_CNT >= 146 && *AUX_CNT < 166) {
+      } else {
+        if (*AUX_CNT >= 165) {
+          *AUX_CNT = 0;
+        }
+
         EmergencyLights.LB_TA_1 = EmergencyLightState::OFF;
         EmergencyLights.LB_TA_2 = EmergencyLightState::OFF;
         EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
         EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
         EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
       }
-
-      // TODO: Reset AUX_CNT here instead of stm32 file
 
       break;
     case Code1::PCSO:
@@ -612,7 +517,8 @@ void CHP::updateEmergencyOutput() {
 
       if ((!Active(EmergencyStateMachine.State.TrafficAdvisor_S) &&
           EmergencyStateMachine.State.ConSiren_S != ContinuousSiren::YELP) ||
-          (VehicleStateMachine.State.Gear_S == Gear::PARK)
+          (!Active(EmergencyStateMachine.State.TrafficAdvisor_S) &&
+              (VehicleStateMachine.State.Gear_S == Gear::PARK))
           ) {
         if (MAIN_TIM[0]) {
           EmergencyLights.LB_RE_Blue = EmergencyLightState::ON;
@@ -935,10 +841,10 @@ void CHP::updateEmergencyOutput() {
         } else {
           // Yelp pattern
           if (
-              (*AUX_CNT >= 0 && *AUX_CNT < 4) ||
-                  (*AUX_CNT >= 5 && *AUX_CNT < 9) ||
-                  (*AUX_CNT >= 10 && *AUX_CNT < 14) ||
-                  (*AUX_CNT >= 15 && *AUX_CNT < 23)) {
+              (*AUX_CNT >=0 && *AUX_CNT < 1) ||
+                  (*AUX_CNT >=2 && *AUX_CNT < 3) ||
+                  (*AUX_CNT >=4 && *AUX_CNT < 5) ||
+                  (*AUX_CNT >=6 && *AUX_CNT < 12)) {
             EmergencyLights.LB_FR_Inner_Red = EmergencyLightState::ON;
             EmergencyLights.LB_FR_Corner_Red = EmergencyLightState::ON;
 
@@ -972,7 +878,7 @@ void CHP::updateEmergencyOutput() {
             }
 
           } else {
-            if (*AUX_CNT >= 46) {
+            if (*AUX_CNT >= 26) {
               *AUX_CNT = 0;
             }
 
@@ -1011,10 +917,10 @@ void CHP::updateEmergencyOutput() {
           }
 
           if (
-              (*AUX_CNT >= 23 && *AUX_CNT < 27) ||
-                  (*AUX_CNT >= 28 && *AUX_CNT < 32) ||
-                  (*AUX_CNT >= 33 && *AUX_CNT < 37) ||
-                  (*AUX_CNT >= 38 && *AUX_CNT < 46)) {
+              (*AUX_CNT >=13 && *AUX_CNT < 14) ||
+                  (*AUX_CNT >=15 && *AUX_CNT < 16) ||
+                  (*AUX_CNT >=17 && *AUX_CNT < 18) ||
+                  (*AUX_CNT >=19 && *AUX_CNT < 25)) {
             EmergencyLights.LB_Takedown_Outer = EmergencyLightState::ON;
             EmergencyLights.LB_DR_Alley = EmergencyLightState::ON;
             EmergencyLights.LB_PS_Alley = EmergencyLightState::ON;
@@ -1058,7 +964,8 @@ void CHP::updateEmergencyOutput() {
 
       if ((!Active(EmergencyStateMachine.State.TrafficAdvisor_S) &&
           EmergencyStateMachine.State.ConSiren_S != ContinuousSiren::YELP) ||
-          (VehicleStateMachine.State.Gear_S == Gear::PARK)
+          (!Active(EmergencyStateMachine.State.TrafficAdvisor_S) &&
+          (VehicleStateMachine.State.Gear_S == Gear::PARK))
           ) {
         if (MAIN_TIM[0]) {
           EmergencyLights.LB_RE_Blue = EmergencyLightState::ON;
@@ -1175,6 +1082,9 @@ void CHP::updateEmergencyOutput() {
         EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
         EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
         break;
+      default:
+        *TA_CNT = 0;
+        break;
     }
   } else if (EmergencyStateMachine.State.TrafficAdvisor_S == TrafficAdvisor::RIGHT) {
     switch (*TA_CNT) {
@@ -1248,6 +1158,9 @@ void CHP::updateEmergencyOutput() {
         EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
         EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
         break;
+      default:
+        *TA_CNT = 0;
+        break;
     }
   } else if (EmergencyStateMachine.State.TrafficAdvisor_S == TrafficAdvisor::SPLIT) {
     switch (*TA_CNT) {
@@ -1292,6 +1205,9 @@ void CHP::updateEmergencyOutput() {
         EmergencyLights.LB_TA_3 = EmergencyLightState::OFF;
         EmergencyLights.LB_TA_4 = EmergencyLightState::OFF;
         EmergencyLights.LB_TA_5 = EmergencyLightState::OFF;
+        break;
+      default:
+        *TA_CNT = 0;
         break;
     }
   }

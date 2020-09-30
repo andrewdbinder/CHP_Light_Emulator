@@ -14,7 +14,7 @@ int main() {
 
   bool ww;
   bool e_ww[2];
-  short test = 0;
+  unsigned short test = 0;
 //  ww = &e_ww[0];
 
   CHP CHP(e_ww, e_ww, &ww, &ww, &test, &test);

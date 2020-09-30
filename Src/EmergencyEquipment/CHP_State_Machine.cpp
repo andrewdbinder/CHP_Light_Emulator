@@ -65,6 +65,8 @@ char CHP_State_Machine::StateChange(Code1 event) {
 }
 
 char CHP_State_Machine::StateChange(Code2 event) {
+  StateChange(IntermittentSiren::OFF);
+
   switch(event) {
     case Code2::OFF:
       State.Code2_S = Code2::OFF;
@@ -87,6 +89,8 @@ char CHP_State_Machine::StateChange(Code2 event) {
 }
 
 char CHP_State_Machine::StateChange(Code3 event) {
+  StateChange(IntermittentSiren::OFF);
+
   switch(event) {
     case Code3::OFF:
       State.Code3_S = Code3::OFF;

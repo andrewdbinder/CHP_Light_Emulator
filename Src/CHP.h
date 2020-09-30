@@ -13,7 +13,7 @@
 class CHP {
  public:
 
-  CHP(bool *main_ww_tim, bool *yelp_tim, bool *hdl_ww_tim, bool *ind_ww_tim, short *ta_map, short *aux_map);
+  CHP(bool *main_ww_tim, bool *yelp_tim, bool *hdl_ww_tim, bool *ind_ww_tim, unsigned short *ta_map, unsigned short *aux_map);
   CHP();
 
   bool
@@ -22,7 +22,7 @@ class CHP {
       *HDL_TIM,
       *IND_TIM;
 
-  short
+  unsigned short
       *TA_CNT,
       *AUX_CNT;
 
