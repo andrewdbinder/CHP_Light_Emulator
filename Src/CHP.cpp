@@ -27,18 +27,21 @@ CHP::CHP(bool *main_ww_tim, bool *yelp_tim, bool *hdl_ww_tim, bool *ind_ww_tim, 
 
 CHP::CHP() {
   // Emergency Lights WW1
-  MAIN_TIM = nullptr;
+  MAIN_TIM = 0;
 
-  YELP_TIM = nullptr;
+  YELP_TIM = 0;
 
   // Headlight Flasher
-  HDL_TIM = nullptr;
+  HDL_TIM = 0;
 
   // Indicator Flasher
-  IND_TIM = nullptr;
+  IND_TIM = 0;
 
   // TA Counter
-  TA_CNT = nullptr;
+  TA_CNT = 0;
+
+  // Aux cnt
+  AUX_CNT = 0;
 
   EmergencyLights = CHP_Lights();
   VehicleLights = Vehicle_Lights();
@@ -1551,6 +1554,12 @@ char CHP::StateChange(char input) {
       return EmergencyStateMachine.StateChange(Scene::P_SPOT_ON);
     case '%':
       return EmergencyStateMachine.StateChange(Scene::P_SPOT_OFF);
+
+    // Horn Tap
+    case 'g':
+      return HornTap(true);
+    case 'G':
+      return HornTap(false);
 
     // Reset ALL
     case ')':
