@@ -115,3 +115,11 @@ Two main methods are implemented for changing lighting states. Internally, funct
 |-------------|---------------|------|
 | Horn Off    | `Horn::OFF`   | `R`  |
 | Horn On     | `Horn::ON`    | `r`  |
+
+## General Functions
+| Description   | Function Call                    | Char |
+|---------------|----------------------------------|------|
+| Press Horn    | `HornTap(true)`                  | `g`  |
+| Release Horn  | `Horn(false)`                    | `G`  |
+| L/S Off       | `EmergencyStateEvent::LS_OFF`    | `0`  |
+| Scene Off     | `EmergencyStateEvent::SCENE_OFF` | `(`  |
