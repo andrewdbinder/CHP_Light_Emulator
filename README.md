@@ -73,3 +73,45 @@ Two main methods are implemented for changing lighting states. Internally, funct
 | Driver Spotlight Off      | `Scene::D_SPOT_OFF`   | `$`  |
 | Passenger Spotlight On    | `Scene::P_SPOT_ON`    | `5`  |
 | Passenger Spotlight Off   | `Scene::P_SPOT_OFF`   | `%`  |
+
+## Vehicle Functions
+
+### Gear
+| Description | Function Call   | Char |
+|-------------|-----------------|------|
+| Park        | `Gear::PARK`    | `p`  |
+| Reverse     | `Gear::REVERSE` | `o`  |
+| Drive       | `Gear::DRIVE`   | `i`  |
+
+### Indicators
+| Description       | Function Call            | Char |
+|-------------------|--------------------------|------|
+| Turn Signal Off   | `Indicators::OFF`        | `-`  |
+| Left Turn Signal  | `Indicators::TURN_LEFT`  | `[`  |
+| Right Turn Signal | `Indicators::TURN_RIGHT` | `]`  |
+| Hazard Lights     | `Indicators::HAZARD`     | `=`  |
+
+### Headlights
+| Description       | Function Call      | Char |
+|-------------------|--------------------|------|
+| Headlights Off    | `Headlights::OFF`  | `t`  |
+| Parking Lights On | `Headlights::PARK` | `y`  |
+| Headlights On     | `Headlights::ON`   | `u`  |
+
+### Brights
+| Description | Function Call  | Char |
+|-------------|----------------|------|
+| Brights Off | `Brights::OFF` | `T`  |
+| Brights On  | `Brights::ON`  | `U`  |
+
+### Brakes
+| Description      | Function Call | Char |
+|------------------|---------------|------|
+| Brake Lights Off | `Brakes::OFF` | `V`  |
+| Brake Lights On  | `Brakes::ON`  | `v`  |
+
+### Horn
+| Description | Function Call | Char |
+|-------------|---------------|------|
+| Horn Off    | `Horn::OFF`   | `R`  |
+| Horn On     | `Horn::ON`    | `r`  |
