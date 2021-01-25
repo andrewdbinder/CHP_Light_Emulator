@@ -1511,10 +1511,6 @@ char CHP::StateChange(char input) {
     case '/':
       return EmergencyStateMachine.StateChange(IntermittentSiren::MANUAL);
 
-    // Other
-    case '0':
-      return EmergencyStateMachine.StateChange(EmergencyStateEvent::ALL_OFF);
-
     // Indicators
     case '-':
       return VehicleStateMachine.StateChange(Indicators::OFF);
