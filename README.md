@@ -21,40 +21,40 @@ To be continued.
 
 
 ### Code 2 Lights
-|                | Description            | Function Call         | Char |
-|----------------|------------------------|-----------------------|------|
-| OFF            | Off                    | Code2::OFF            | s    |
-| FORWARD_RED    | Forward Red            | Code2::FORWARD_RED    | 2    |
-| FORWARD_RED_WW | Forward Red w/ Wig Wag | Code2::FORWARD_RED_WW | w    |
+| Description            | Function Call         | Char |
+|------------------------|-----------------------|------|
+| Off                    | Code2::OFF            | s    |
+| Forward Red            | Code2::FORWARD_RED    | 2    |
+| Forward Red w/ Wig Wag | Code2::FORWARD_RED_WW | w    |
 
 ### Code 3 Lights
-|                 | Description                 | Function Call          | Char |
-|-----------------|-----------------------------|------------------------|------|
-| OFF             | Off                         | Code3::OFF             | x    |
-| CODE_3          | Code 3                      | Code3::CODE_3          | 3    |
-| CODE_3_WW       | Code 3 w/o Wig Wag          | Code3::CODE_3_WW       | e    |
-| CODE_3_WW_AM    | Code 3 w/o Wig Wag or Amber | Code3::CODE_3_WW_AM    | d    |
-| CODE_3_PK       | Code 3 w/o Park Kill        | Code3::CODE_3_PK       | c    |
-| CODE_3_NEW_YELP | Code 3 NextGen Style        | Code3::CODE_3_NEW_YELP | #    |
+| Description                 | Function Call          | Char |
+|-----------------------------|------------------------|------|
+| Off                         | Code3::OFF             | x    |
+| Code 3                      | Code3::CODE_3          | 3    |
+| Code 3 w/o Wig Wag          | Code3::CODE_3_WW       | e    |
+| Code 3 w/o Wig Wag or Amber | Code3::CODE_3_WW_AM    | d    |
+| Code 3 w/o Park Kill        | Code3::CODE_3_PK       | c    |
+| Code 3 NextGen Style        | Code3::CODE_3_NEW_YELP | #    |
 
 ### Traffic Advisor
-|       | Description | Function Call         | Char |
-|-------|-------------|-----------------------|------|
-| OFF   | Off         | TrafficAdvisor::OFF   | h    |
-| LEFT  | Left T/A    | TrafficAdvisor::LEFT  | j    |
-| RIGHT | Right T/A   | TrafficAdvisor::RIGHT | l    |
-| SPLIT | Split T/A   | TrafficAdvisor::SPLIT | k    |
+| Description | Function Call         | Char |
+|-------------|-----------------------|------|
+| Off         | TrafficAdvisor::OFF   | h    |
+| Left T/A    | TrafficAdvisor::LEFT  | j    |
+| Right T/A   | TrafficAdvisor::RIGHT | l    |
+| Split T/A   | TrafficAdvisor::SPLIT | k    |
 
 ### Continuous Siren
-|      | Description | Function Call         | Char |
-|------|-------------|-----------------------|------|
-| OFF  | Off         | ContinuousSiren::OFF  | b    |
-| WAIL | Siren Wail  | ContinuousSiren::WAIL | n    |
-| YELP | Siren Yelp  | ContinuousSiren::YELP | m    |
+| Description | Function Call         | Char |
+|-------------|-----------------------|------|
+| Off         | ContinuousSiren::OFF  | b    |
+| Siren Wail  | ContinuousSiren::WAIL | n    |
+| Siren Yelp  | ContinuousSiren::YELP | m    |
 
 ### Intermittent Siren
-|          | Description  | Function Call               | Char |
-|----------|--------------|-----------------------------|------|
-| OFF      | Off          | IntermittentSiren::OFF      | ,    |
-| AIR_HORN | Air Horn     | IntermittentSiren::AIR_HORN | .    |
-| MANUAL   | Manual Siren | IntermittentSiren::MANUAL   | /    |
+| Description  | Function Call               | Char |
+|--------------|-----------------------------|------|
+| Off          | IntermittentSiren::OFF      | ,    |
+| Air Horn     | IntermittentSiren::AIR_HORN | .    |
+| Manual Siren | IntermittentSiren::MANUAL   | /    |
