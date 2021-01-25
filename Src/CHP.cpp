@@ -1582,7 +1582,11 @@ char CHP::StateChange(char input) {
     case '%':
       return EmergencyStateMachine.StateChange(Scene::P_SPOT_OFF);
 
-    // Horn Tap
+    // Other
+    case '0':
+      return EmergencyStateMachine.StateChange(EmergencyStateEvent::LS_OFF);
+    case '(':
+      return EmergencyStateMachine.StateChange(EmergencyStateEvent::SCENE_OFF);
     case 'g':
       return HornTap(true);
     case 'G':

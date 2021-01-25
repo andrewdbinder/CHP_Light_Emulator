@@ -6,7 +6,7 @@
 
 char CHP_State_Machine::StateChange(EmergencyStateEvent event) {
   switch(event) {
-    case EmergencyStateEvent::ALL_OFF:
+    case EmergencyStateEvent::LS_OFF:
       State.Code1_S = Code1::OFF;
       State.Code2_S = Code2::OFF;
       State.Code3_S = Code3::OFF;
@@ -14,6 +14,13 @@ char CHP_State_Machine::StateChange(EmergencyStateEvent event) {
       State.ConSiren_S = ContinuousSiren::OFF;
       State.IntSiren_S = IntermittentSiren::OFF;
       return '0';
+    case EmergencyStateEvent::SCENE_OFF:
+      State.Takedown_S = false;
+      State.D_Alley_S = false;
+      State.P_Alley_S = false;
+      State.D_Spot_S = false;
+      State.P_Spot_S = false;
+      return '(';
   }
 
   return 1;
@@ -200,6 +207,7 @@ char CHP_State_Machine::StateChange(IntermittentSiren event) {
 
   return 1;
 }
+
 char CHP_State_Machine::StateChange(Scene event) {
   switch (event) {
     case Scene::TAKEDOWN_OFF:

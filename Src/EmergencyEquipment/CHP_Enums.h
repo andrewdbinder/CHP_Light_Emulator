@@ -6,7 +6,8 @@
 #define CHP_V4_CHP_ENUMS_H
 
 enum class EmergencyStateEvent : char {
-  ALL_OFF,
+  LS_OFF,
+  SCENE_OFF
 };
 
 enum class Code1 : char {
