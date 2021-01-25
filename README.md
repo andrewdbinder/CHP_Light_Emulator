@@ -6,6 +6,7 @@ To be continued.
 
 # Usage
 
+Two main methods are implemented for changing lighting states. Internally, function calls can be used to change the state of the emulator. These calls return a `char` which when input into a StateChange call will update a remote emulator with the same state. These `char` commands can be sent over a lightweight communication protocal (e.g. UART) to keep two instances of the emulator synced together.
 
 ## Emergency Lighting
 
@@ -57,3 +58,18 @@ To be continued.
 | Off          | `IntermittentSiren::OFF`      | `,`  |
 | Air Horn     | `IntermittentSiren::AIR_HORN` | `.`  |
 | Manual Siren | `IntermittentSiren::MANUAL`   | `/`  |
+
+## Scene Lighting
+
+| Description               | Function Call         | Char |
+|---------------------------|-----------------------|------|
+| Takedown Lights On        | `Scene::TAKEDOWN_ON`  | `7`  |
+| Takedown Lights Off       | `Scene::TAKEDOWN_OFF` | `&`  |
+| Driver Alley Light On     | `Scene::D_ALLEY_ON`   | `6`  |
+| Driver Alley Light Off    | `Scene::D_ALLEY_OFF`  | `^`  |
+| Passenger Alley Light On  | `Scene::P_ALLEY_ON`   | `8`  |
+| Passenger Alley Light Off | `Scene::P_ALLEY_OFF`  | `*`  |
+| Driver Spotlight On       | `Scene::D_SPOT_ON`    | `4`  |
+| Driver Spotlight Off      | `Scene::D_SPOT_OFF`   | `$`  |
+| Passenger Spotlight On    | `Scene::P_SPOT_ON`    | `5`  |
+| Passenger Spotlight Off   | `Scene::P_SPOT_OFF`   | `%`  |
