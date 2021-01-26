@@ -8,7 +8,7 @@ There are two constructors which can be used to run the software in two differen
 
 ## State Only Mode
 
-By using the constructor with no parameters (i.e. `CHP CHP;`), all states are initialized to default "off" modes. The `CHP.StateChange()` function can be used to enable different lighting modes or vehicle modes using the function parameters listed in the [State Controls](state-controls) section. States can be accessed using `EmergencyStateMachine` and `VehicleStateMachine` members of the main `CHP` class. This is demonstrated in [main.cpp](main.cpp).
+By using the constructor with no parameters (i.e. `CHP CHP;`), all states are initialized to default "off" modes. The `CHP.StateChange()` function can be used to enable different lighting modes or vehicle modes using the function parameters listed in the [State Controls](#-state-controls) section. States can be accessed using `EmergencyStateMachine` and `VehicleStateMachine` members of the main `CHP` class. This is demonstrated in [main.cpp](main.cpp).
 
 ## Full Output Mode
 
