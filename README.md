@@ -1,10 +1,18 @@
 # CHP Lighting Emulator
 
-This project aims to create methods for accurately emulating the emergency lighting behavior the California Highway Patrol uses on their emergency vehicles. It is designed to run on embedded platforms, such as Arduino or STM32-based platforms. The software has three main functions: acting as a state machine for the different lighting modes, generating outputs for light heads, and generating outputs for sounds. My project utilizing this library can be seen [here](https://abinder.dev/chp/2020/08/21/chp-2.html).
-
-To be continued.
+This project aims to create methods for accurately emulating the emergency lighting behavior the California Highway Patrol uses on their emergency vehicles. It is designed to run on embedded platforms, such as Arduino or STM32-based platforms. The software has three main functions: acting as a state machine for the different lighting modes (and generalized vehicle features), generating outputs for light heads, and generating outputs for sounds. My project utilizing this library can be seen [here](https://abinder.dev/chp/2020/08/21/chp-2.html).
 
 # Usage
+
+There are two constructors which can be used to run the software in two different modes. One is useful for only keeping track of states, while the other is used for actually generating outputs.
+
+## State Only Mode
+
+By using the constructor with no parameters (i.e. `CHP CHP;`), all states are initialized to default "off" modes. The `CHP.StateChange()` function can be used to enable different lighting modes or vehicle modes using the function parameters listed in the [State Controls](state-controls) section. States can be accessed using `EmergencyStateMachine` and `VehicleStateMachine` members of the main `CHP` class. This is demonstrated in [main.cpp](main.cpp).
+
+## Full Output Mode
+
+# State Controls
 
 Two main methods are implemented for changing lighting states. Internally, function calls can be used to change the state of the emulator. These calls return a `char` which when input into a StateChange call will update a remote emulator with the same state. These `char` commands can be sent over a lightweight communication protocal (e.g. UART) to keep two instances of the emulator synced together.
 
