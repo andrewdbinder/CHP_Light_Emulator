@@ -1,3 +1,5 @@
+// Example implementation of chp-lighting state machine
+
 #include <iostream>
 #include "Src/EmergencyEquipment/CHP_State_Machine.h"
 #include "Src/CHP.h"
@@ -5,34 +7,30 @@
 
 using namespace std;
 
-void testStateMachine(CHP);
+// Function Prototypes
 void printState(CHP_Emergency_States state);
 
 int main() {
+  // Create CHP Variable, no parameters needed for state machine emulation
+  CHP CHP;
 
+  // Variable to input character from console
+  char input;
 
+  // Continuously read console, change state, and print state to console
+  do {
+    cin >> input;
+    if (cin) {
+      // Call CHP.StateChange with char to change state of CHP Object
+      CHP.StateChange(input);
+      printState(CHP.EmergencyStateMachine.State);
+    }
+  } while (true);
 
-  bool ww;
-  bool e_ww[2];
-  unsigned short test = 0;
-//  ww = &e_ww[0];
-
-  CHP CHP(e_ww, e_ww, &ww, &ww, &test, &test);
-
-  e_ww[0] = true;
-  e_ww[1] = false;
-  cout << CHP.MAIN_TIM[0] << CHP.MAIN_TIM[1] << endl;
-  e_ww[0] = false;
-  e_ww[1] = true;
-  cout << CHP.MAIN_TIM[0] << CHP.MAIN_TIM[1] << endl;
-
-  CHP.EmergencyLights = CHP_Lights();
-
-
-  cout << sizeof(CHP.EmergencyLights.PB_DR_Inner);
   return 0;
 }
 
+// Inputs state, outputs easy to read states of main emergency states
 void printState(CHP_Emergency_States state) {
   using namespace std;
 
@@ -42,72 +40,4 @@ void printState(CHP_Emergency_States state) {
   cout << "Traffic Advisor: " << state.TrafficAdvisor_S << endl;
   cout << "Siren: " << state.ConSiren_S << endl;
   cout << endl;
-}
-
-void testStateMachine(CHP CHP) {
-  char char_input;
-  do {
-    cin >> char_input;
-
-    if (cin) {
-      switch (char_input) {
-        case '1':
-          switch (CHP.EmergencyStateMachine.State.Code1_S) {
-
-            case Code1::OFF:
-              CHP.EmergencyStateMachine.StateChange(Code1::REAR_AMBER);
-              break;
-            case Code1::REAR_AMBER:
-              CHP.EmergencyStateMachine.StateChange(Code1::FORWARD_CUTOFF);
-              break;
-            case Code1::FORWARD_CUTOFF:
-              CHP.EmergencyStateMachine.StateChange(Code1::AMBER_ONLY);
-              break;
-            case Code1::AMBER_ONLY:
-              CHP.EmergencyStateMachine.StateChange(Code1::OFF);
-              break;
-          }
-          printState(CHP.EmergencyStateMachine.State);
-          break;
-
-        case '2':
-          switch (CHP.EmergencyStateMachine.State.Code2_S) {
-
-            case Code2::OFF:
-              CHP.EmergencyStateMachine.StateChange(Code2::FORWARD_RED);
-              break;
-            case Code2::FORWARD_RED:
-              CHP.EmergencyStateMachine.StateChange(Code2::FORWARD_RED_WW);
-              break;
-            case Code2::FORWARD_RED_WW:
-              CHP.EmergencyStateMachine.StateChange(Code2::OFF);
-              break;
-          }
-          printState(CHP.EmergencyStateMachine.State);
-          break;
-
-        case '3':
-          switch (CHP.EmergencyStateMachine.State.Code3_S) {
-
-            case Code3::OFF:
-              CHP.EmergencyStateMachine.StateChange(Code3::CODE_3);
-              break;
-            case Code3::CODE_3:
-              CHP.EmergencyStateMachine.StateChange(Code3::CODE_3_WW);
-              break;
-            case Code3::CODE_3_WW:
-              CHP.EmergencyStateMachine.StateChange(Code3::CODE_3_WW_AM);
-              break;
-            case Code3::CODE_3_WW_AM:
-              CHP.EmergencyStateMachine.StateChange(Code3::CODE_3_PK);
-              break;
-            case Code3::CODE_3_PK:
-              CHP.EmergencyStateMachine.StateChange(Code3::OFF);
-              break;
-          }
-          printState(CHP.EmergencyStateMachine.State);
-          break;
-      }
-    }
-  } while (true);
 }
